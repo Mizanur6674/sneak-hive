@@ -133,6 +133,7 @@ export default function AddProducts() {
 
                 setPreview(url);
                 setUploadProgress(null);
+                /// test
               }
             }}
           />
