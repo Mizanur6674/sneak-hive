@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export const deleteProduct = async (id: number) => {
   const result = await prisma.product.delete({

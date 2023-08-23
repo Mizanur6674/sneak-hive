@@ -1,9 +1,10 @@
 "use server";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
+import { ProductType } from "@/types";
 // import { ProductType } from "@/types";
 import { slugify } from "@/utils/slugify";
 
-const addProduct = async (values: any) => {
+const addProduct = async (values: ProductType) => {
   try {
     const { name, images, ...rest } = values;
     const newProduct = await prisma.product.create({

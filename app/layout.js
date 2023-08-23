@@ -24,6 +24,7 @@ const excludeRoutes = [
   "/dashboard",
   "/dashboard/products/add-products",
   "/dashboard/products/edit-products",
+  "/dashboard/products/edit-products/id",
 ];
 
 export default function RootLayout({ children }) {

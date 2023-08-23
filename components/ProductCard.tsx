@@ -10,7 +10,7 @@ const ProductCard = ({ data }: { data: any }) => {
       href={`/product/${data?.slug}`}
       className="sb transform w-full bg-white duration-200 hover:scale-105 cursor-pointer"
     >
-      <div className="w-full h-[300px] relative overflow-hidden">
+      <div className="w-full aspect-square relative overflow-hidden">
         <Image
           fill
           src={data.images[0]}
