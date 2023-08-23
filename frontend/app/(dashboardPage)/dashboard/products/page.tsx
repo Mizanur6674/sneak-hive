@@ -1,5 +1,4 @@
 "use client";
-
 import { getProducts } from "@/action/products/getProducts";
 import ProductTable from "@/components/dashboard/products/table/Product-table";
 import { productColumns } from "@/components/dashboard/products/table/columns/product-table-columns";

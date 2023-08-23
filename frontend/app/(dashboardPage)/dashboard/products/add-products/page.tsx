@@ -4,17 +4,21 @@ import addProduct from "@/action/products/addProduct";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductSchema, ProductType } from "@/types";
-// import { uploadImages } from "@/utils/uploadImages";
+import { uploadImages } from "@/utils/uploadImages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiLoader } from "react-icons/fi";
 
 export default function AddProducts() {
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const router = useRouter();
 
   const {
@@ -98,6 +102,48 @@ export default function AddProducts() {
           />
           <p className=" text-red-500"> {errors.description?.message} </p>
         </div>
+        <div>
+          {preview && (
+            <div className=" relative w-40 h-40 object-contain">
+              <Image src={preview} fill alt="" />
+            </div>
+          )}
+          <Input
+            className=" flex items-center focus-visible:outline-orange-500 "
+            type="file"
+            accept="image/*"
+            onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+              if (e.target.files.length !== 0) {
+                const file: File = e.target.files[0];
+                setPreview(URL.createObjectURL(file));
+                console.log({ file });
+
+                const { url } = await uploadImages(
+                  file,
+                  setUploadProgress,
+                  "organic"
+                );
+                console.log("url", url);
+
+                setValue("images", [url], {
+                  shouldTouch: true,
+                  shouldValidate: true,
+                  shouldDirty: true,
+                });
+
+                setPreview(url);
+                setUploadProgress(null);
+              }
+            }}
+          />
+          <p className=" text-red-500"> {errors.images?.message} </p>
+        </div>
+
+        {uploadProgress !== null && (
+          <div>
+            <Progress value={uploadProgress} />
+          </div>
+        )}
 
         <Button
           disabled={!isValid || isSubmitting}

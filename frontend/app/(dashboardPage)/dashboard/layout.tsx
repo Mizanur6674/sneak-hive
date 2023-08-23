@@ -3,6 +3,7 @@ import "../../globals.css";
 import Sidebar from "../../../components/dashboard/sidebar/Sidebar";
 import Navbar from "@/components/dashboard/navbar/navbar";
 import ProviderContainer from "@/components/shared/provider/Provider";
+import ToasterProvider from "@/components/shared/provider/ToasterProvider";
 
 export const metadata = {
   title: "Sneak-Hive | dashboard",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="overflow-hidden">
         <ProviderContainer>
+          <ToasterProvider />
           <Navbar />
           <div className=" flex">
             <Sidebar />

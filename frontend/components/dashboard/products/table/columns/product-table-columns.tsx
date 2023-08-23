@@ -2,6 +2,7 @@
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table";
 import { product } from "@prisma/client";
 import Image from "next/image";
+import ProductActiveCell from "./product-active-cell";
 // import ProductActiveCell from "./product-active-cell";
 
 const columnHelper = createColumnHelper<product>();
@@ -38,11 +39,11 @@ export const productColumns: ColumnDef<product>[] = [
   columnHelper.accessor("description", {
     header: "Description",
   }),
-  //   columnHelper.accessor("active", {
-  //     header: "Active",
-  //     cell: (e) => {
-  //       const data = e.row.original;
-  //       return <ProductActiveCell data={data} />;
-  //     },
-  //   }),
+  columnHelper.accessor("active", {
+    header: "Active",
+    cell: (e) => {
+      const data = e.row.original;
+      return <ProductActiveCell data={data} />;
+    },
+  }),
 ];
