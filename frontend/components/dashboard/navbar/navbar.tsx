@@ -9,7 +9,7 @@ const Navbar = () => {
   const currentUser = useSession();
   const { setTheme, theme } = useTheme();
   return (
-    <div className=" px-4 bg-theme-secondary h-20 w-full flex items-center justify-between">
+    <div className=" px-4 bg-theme-primary h-20 w-full flex items-center justify-between">
       <div className=" flex items-center gap-x-2">
         <div className=" relative w-6 h-6 ">
           <Image src="/logo.svg" fill alt="mainLogo" />

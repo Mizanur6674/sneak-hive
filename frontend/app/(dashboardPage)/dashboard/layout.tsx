@@ -2,6 +2,7 @@ import React from "react";
 import "../../globals.css";
 import Sidebar from "../../../components/dashboard/sidebar/Sidebar";
 import Navbar from "@/components/dashboard/navbar/navbar";
+import ProviderContainer from "@/components/shared/provider/Provider";
 
 export const metadata = {
   title: "Sneak-Hive | dashboard",
@@ -16,13 +17,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="overflow-hidden">
-        <Navbar />
-        <div className=" flex">
-          <Sidebar />
-          <div className="p-4 flex-1 max-h-[calc(100vh-80px)] overflow-y-auto">
-            {children}
+        <ProviderContainer>
+          <Navbar />
+          <div className=" flex">
+            <Sidebar />
+            <div className="p-4 flex-1 max-h-[calc(100vh-80px)] overflow-y-auto">
+              {children}
+            </div>
           </div>
-        </div>
+        </ProviderContainer>
       </body>
     </html>
   );

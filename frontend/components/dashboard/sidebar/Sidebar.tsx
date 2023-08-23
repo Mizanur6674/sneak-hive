@@ -6,12 +6,12 @@ import { dashboardSidebarData } from "../../shared/data/data";
 const Sidebar = () => {
   const router = useRouter();
   return (
-    <div className=" pt-10 pl-4 space-y-8 bg-theme-primary h-screen w-56 cursor-pointer ">
+    <div className="sb pt-10 pl-4 space-y-8 bg-theme-primary h-screen w-56 cursor-pointer ">
       {dashboardSidebarData.map((item, index) => {
         return (
           <div
             key={index}
-            className=" flex items-center gap-x-3"
+            className="sb flex items-center gap-x-3"
             onClick={() => router.push(item.href)}
           >
             <item.icon
