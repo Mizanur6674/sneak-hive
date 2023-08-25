@@ -1,17 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import Menu from "./Menu";
 
-import { IoMdHeartEmpty } from "react-icons/io";
-import { BsCart } from "react-icons/bs";
+import { useAppSelector } from "@/store/store";
+import getCart from "@/utils/localStorage/getCart";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { BiMenuAltRight } from "react-icons/bi";
+import { BsCart } from "react-icons/bs";
+import { IoMdHeartEmpty } from "react-icons/io";
 import { VscChromeClose } from "react-icons/vsc";
 import MenuMobile from "./MobilMenu";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import getCart from "@/utils/localStorage/getCart";
-import { useAppSelector } from "@/store/store";
 
 const Header = () => {
   const {
@@ -28,7 +28,7 @@ const Header = () => {
   const [cart, setCart] = React.useState(0);
   useEffect(() => {
     setCart(getCart().length);
-  }, [cart, product.length]);
+  }, [product.length]);
 
   const controlNavbar = () => {
     if (window.scrollY > 200) {

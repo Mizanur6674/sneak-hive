@@ -181,7 +181,7 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
           </div>
         )}
 
-        <Button disabled={!isValid || isSubmitting || !isDirty} type="submit">
+        <Button disabled={isSubmitting || !isDirty} type="submit">
           {!isSubmitting ? (
             <span>Submit</span>
           ) : (

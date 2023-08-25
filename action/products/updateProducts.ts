@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { ProductType } from "@/types";
 
 export const updatedProduct = async (id: number, values: ProductType) => {
+  console.log(values);
   try {
     const updateProduct = await prisma.product.update({
       where: {
