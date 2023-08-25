@@ -1,8 +1,8 @@
-import { getCategoryProductBySlug } from "@/utils/dataFetching";
+import { getCategoryBySlug } from "@/action/categories/getCategoryBySlug";
 import CategoryFilterData from "../components/CategoryFilterData";
 
 const Category = async ({ params: { slug } }: { params: { slug: string } }) => {
-  const result = await getCategoryProductBySlug(slug);
+  const result = await getCategoryBySlug(slug);
 
   return <CategoryFilterData result={result} />;
 };

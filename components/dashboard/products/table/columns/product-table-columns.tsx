@@ -1,6 +1,6 @@
 "use client";
-import { createColumnHelper, ColumnDef } from "@tanstack/react-table";
 import { product } from "@prisma/client";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import Image from "next/image";
 import ProductActiveCell from "./product-active-cell";
 // import ProductActiveCell from "./product-active-cell";
@@ -23,8 +23,13 @@ export const productColumns: ColumnDef<product>[] = [
     header: "Name",
   }),
 
-  columnHelper.accessor("quantity", {
+  columnHelper.accessor("sizes", {
     header: "Quantity",
+    cell: (info) => {
+      const sizes = info.getValue();
+      const quantity = sizes?.reduce((a, b: any) => a + b?.quantity, 0);
+      return <span>{quantity}</span>;
+    },
   }),
 
   columnHelper.accessor("price", {

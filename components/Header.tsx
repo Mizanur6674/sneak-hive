@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Menu from "./Menu";
 
 import { useAppSelector } from "@/store/store";
 import getCart from "@/utils/localStorage/getCart";
@@ -11,6 +10,7 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { BsCart } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { VscChromeClose } from "react-icons/vsc";
+import Menu from "./Menu";
 import MenuMobile from "./MobilMenu";
 
 const Header = () => {

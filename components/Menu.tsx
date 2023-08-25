@@ -1,26 +1,27 @@
-import React from "react";
-import Link from "next/link";
-import { BsChevronDown } from "react-icons/bs";
-import { useSession, signOut } from "next-auth/react";
+"use client";
 
-const data = [
+import { getCategory } from "@/action/categories/getCategoryId";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import React from "react";
+import { BsChevronDown } from "react-icons/bs";
+
+const menuData = [
   { id: 1, name: "Home", url: "/" },
   { id: 2, name: "About", url: "/about" },
   { id: 3, name: "Categories", subMenu: true },
   { id: 4, name: "Contact", url: "/contact" },
 ];
 
-const subMenuData = [
-  { id: 1, name: "Jordan", doc_count: 11 },
-  { id: 2, name: "Sneakers", doc_count: 8 },
-  { id: 3, name: "Running shoes", doc_count: 64 },
-  { id: 4, name: "Football shoes", doc_count: 107 },
-];
+const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["get-category"],
+    queryFn: getCategory,
+  });
 
-const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
   return (
     <ul className="hidden md:flex items-center gap-8 font-medium text-black">
-      {data.map((item) => {
+      {menuData.map((item) => {
         return (
           <React.Fragment key={item.id}>
             {!!item?.subMenu ? (
@@ -34,17 +35,17 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
 
                 {showCatMenu && (
                   <ul className="bg-white absolute top-6 left-0 min-w-[250px] px-1 py-1 text-black shadow-lg">
-                    {categories?.map(({ attributes: c, id }) => {
+                    {data?.map((item, index) => {
                       return (
                         <Link
-                          key={id}
-                          href={`/category/${c.slug}`}
+                          key={index}
+                          href={`/category/${item?.slug}`}
                           onClick={() => setShowCatMenu(false)}
                         >
                           <li className="h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md">
-                            {c.name}
+                            {item.name}
                             <span className="opacity-50 text-sm">
-                              {`(${c.products.data.length})`}
+                              {`(${item?.products?.length})`}
                             </span>
                           </li>
                         </Link>

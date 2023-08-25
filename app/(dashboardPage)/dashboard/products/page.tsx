@@ -16,7 +16,7 @@ export default function Products() {
     queryFn: getProducts,
   });
 
-  fetches.refetchOrders = refetch;
+  fetches.refetchProducts = refetch;
 
   if (isLoading || !data) {
     return <p>data is loading...</p>;

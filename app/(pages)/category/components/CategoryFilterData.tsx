@@ -1,5 +1,6 @@
 "use client";
 
+import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/wapper";
 import { useParams, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -9,6 +10,7 @@ function CategoryFilterData({ result }: any) {
   const query = useSearchParams();
   const maxResult = 3;
   const { slug } = useParams();
+  console.log(result);
 
   return (
     <div className="w-full md:py-20 relative">
@@ -20,19 +22,18 @@ function CategoryFilterData({ result }: any) {
         </div>
 
         {/* products grid start */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
-          {/* {data?.data?.map((product) => (
-            <ProductCard key={product?.id} data={product} />
-          ))} */}
-          {/* <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard /> */}
+        <div>
+          {result?.products?.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
+              {result?.products?.map((product) => (
+                <ProductCard key={product?.id} data={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center h-[40vh] flex justify-center items-center">
+              <p>Products Not Found</p>
+            </div>
+          )}
         </div>
         {/* products grid end */}
 
