@@ -11,7 +11,7 @@ export const checkoutSession = async (products: any[]) => {
   });
   try {
     const session = await stripe.checkout.sessions.create({
-      success_url: `${process.env.NEXTAUTH_URL}/stripe/success?id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.NEXTAUTH_URL}/stripe/redirect?id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXTAUTH_URL}/stripe/cancel?id={CHECKOUT_SESSION_ID}`,
       billing_address_collection: "auto",
       shipping_address_collection: {
@@ -34,8 +34,8 @@ export const createPrice = async (amount: number) => {
   try {
     const price = await stripe.prices.create({
       unit_amount: amount * 100,
-      currency: "usd",
-      product: "prod_OUSeo31kuM20Ir",
+      currency: "bdt",
+      product: "prod_OW2svbjyOr0kTe",
     });
     return price.id;
   } catch (error) {

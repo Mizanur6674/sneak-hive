@@ -1,8 +1,6 @@
-import { ProductCardDataType } from "@/types";
 import { getDiscountedPricePercentage } from "@/utils/helper";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const ProductCard = ({ data }: { data: any }) => {
   return (
@@ -21,18 +19,21 @@ const ProductCard = ({ data }: { data: any }) => {
       <div className="p-4 text-black/[0.9]">
         <h2 className="text-lg font-medium">{data?.name}</h2>
         <div className="flex items-center text-black/[0.5]">
-          <p className="mr-2  text-lg font-semiblod">&#2547;{data?.price}</p>
-
-          {data?.price && (
+          {data?.discount ? (
             <>
-              <p className="text-base  font-medium line-through">
+              <p className="mr-2 text-lg font-semibold">
+                &#2547;{data?.price - data?.discount}
+              </p>
+              <p className="text-base font-medium line-through">
                 &#2547;{data?.price}
               </p>
               <p className="ml-auto text-base font-medium text-red-500">
-                {getDiscountedPricePercentage(data?.price, 2)}
+                {getDiscountedPricePercentage(data?.price, data?.discount)}
                 %off
               </p>
             </>
+          ) : (
+            <p className="mr-2 text-lg font-semibold">&#2547;{data?.price}</p>
           )}
         </div>
       </div>

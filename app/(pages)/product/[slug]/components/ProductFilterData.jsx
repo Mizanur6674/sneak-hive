@@ -1,18 +1,18 @@
 "use client";
 import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
-import ReactMarkdown from "react-markdown";
 import RelatedProducts from "@/components/RelatedProducts";
-import { getDiscountedPricePercentage } from "@/utils/helper";
-import { useState } from "react";
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { signIn, useSession } from "next-auth/react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { allSizes } from "@/utils/sizes";
-import addToCart from "@/utils/localStorage/addCart";
-import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setProduct } from "@/store/addCartSlice";
 import { setWishList } from "@/store/addWishListSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { getDiscountedPricePercentage } from "@/utils/helper";
+import addToCart from "@/utils/localStorage/addCart";
+import { allSizes } from "@/utils/sizes";
+import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import ReactMarkdown from "react-markdown";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ProductFilterData = ({ result }) => {
   const [selectedSize, setSelectedSize] = useState();
   const [showError, setShowError] = useState(false);
@@ -49,6 +49,10 @@ const ProductFilterData = ({ result }) => {
     totalPrice: result?.price * 1,
     discount: result?.discount,
   };
+  const totalQuantity = result?.sizes?.reduce(
+    (acc, { quantity }) => acc + quantity,
+    0
+  );
   return (
     <div className="sb w-full md:py-20">
       <ToastContainer />
@@ -79,7 +83,7 @@ const ProductFilterData = ({ result }) => {
               </p>
             )}
             <div className=" pl-2 text-md font-medium text-black/[0.5]">
-              Q:{result?.quantity}
+              Q:{totalQuantity}
             </div>
             {result?.discount && (
               <p className="ml-auto text-base font-medium text-red-500">
@@ -99,8 +103,8 @@ const ProductFilterData = ({ result }) => {
           <div className="text-md font-medium text-black/[0.5]">
             Quantity:
             {selectedSize
-              ? Math.round(result.quantity / result?.sizes?.length)
-              : result?.quantity}
+              ? result.sizes.find((s) => s.size === selectedSize).quantity
+              : totalQuantity}
           </div>
 
           {/* Product size range start */}
@@ -117,7 +121,7 @@ const ProductFilterData = ({ result }) => {
             {/* Size Start */}
             <div id="sizesGrid" className="grid grid-cols-3 gap-2">
               {allSizes?.map((size, i) => {
-                const isHaveSize = result?.sizes?.includes(size);
+                const isHaveSize = result?.sizes?.find((s) => s.size === size);
                 return (
                   <button
                     key={i}

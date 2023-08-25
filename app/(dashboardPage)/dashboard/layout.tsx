@@ -1,9 +1,8 @@
-import React from "react";
-import "../../globals.css";
-import Sidebar from "../../../components/dashboard/sidebar/Sidebar";
+import { ThemeProvider } from "@/components/dashboard/ThemeProvider";
 import Navbar from "@/components/dashboard/navbar/navbar";
-import ProviderContainer from "@/components/shared/provider/Provider";
-import ToasterProvider from "@/components/shared/provider/ToasterProvider";
+import React from "react";
+import Sidebar from "../../../components/dashboard/sidebar/Sidebar";
+import "../../globals.css";
 
 export const metadata = {
   title: "Sneak-Hive | dashboard",
@@ -16,19 +15,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="overflow-hidden">
-        <ProviderContainer>
-          <ToasterProvider />
-          <Navbar />
-          <div className=" flex">
-            <Sidebar />
-            <div className="p-4 flex-1 max-h-[calc(100vh-80px)] overflow-y-auto">
-              {children}
-            </div>
+    <div className="overflow-hidden w-screen h-screen">
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <Navbar />
+        <div className="flex">
+          <Sidebar />
+          <div className="p-4 flex-1 max-h-[calc(100vh-80px)] overflow-y-auto">
+            {children}
           </div>
-        </ProviderContainer>
-      </body>
-    </html>
+        </div>
+      </ThemeProvider>
+    </div>
   );
 }

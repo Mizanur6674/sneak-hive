@@ -1,4 +1,4 @@
-import React from "react";
+import { getCategory } from "@/action/categories/getCategoryId";
 import { getSingleProduct } from "@/action/products/getSingleProduct";
 import EditProducts from "@/components/dashboard/products/edit-products/edit-product";
 
@@ -9,14 +9,18 @@ export default async function EditProductPage({
 }) {
   const { id } = params;
   const result = await getSingleProduct(Number(id));
+  const category = await getCategory();
+
   const product: any = {
     id: result.id,
     name: result.name,
-    quantity: result.quantity,
     description: result.description,
     price: result.price,
     images: result.images,
     priceId: result.priceId,
+    discount: result.discount,
+    categoryId: result.categoryId,
+    category: category,
   };
 
   return (
