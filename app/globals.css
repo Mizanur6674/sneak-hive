@@ -108,13 +108,13 @@
 
   @media (min-width: 960px) {
     .container {
-      width: calc(100% - 120px);
+      width: calc(100% - 60px);
     }
   }
 
   @media (min-width: 1440px) {
     .container {
-      width: calc(100% - 180px);
+      width: calc(100% - 80px);
     }
   }
 }

@@ -1,16 +1,10 @@
 "use client";
-import addProduct from "@/action/products/addProduct";
 // import { createPrice } from "@/actions/stripe/stripe";
+import { getCategory } from "@/action/categories/getCategoryId";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Textarea } from "@/components/ui/textarea";
-import { ProductSchema, ProductType } from "@/types";
-import { uploadImages } from "@/utils/uploadImages";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -18,13 +12,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { ProductSchema, ProductType } from "@/types";
+import { uploadImages } from "@/utils/uploadImages";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiLoader } from "react-icons/fi";
-import { useQuery } from "@tanstack/react-query";
-import { getCategory } from "@/action/categories/getCategoryId";
 
+import addProduct from "@/action/products/addProduct";
+import { createPrice } from "@/action/stripe/stripe";
+import SelectedMultipleSize from "@/components/dashboard/products/SelectedMultipleSize";
 import { fetches } from "@/lib/refetch";
 
 export default function AddProducts() {
@@ -45,13 +47,13 @@ export default function AddProducts() {
 
   const onSubmit = async (data: ProductType) => {
     try {
-      // const priceId = await createPrice(data.price);
-
+      const priceId = await createPrice(data.price);
       await ProductSchema.parseAsync(data);
-      await addProduct(data);
+      await addProduct({ ...data, priceId });
       toast.success("Product Added");
       reset();
       setPreview(null);
+      setValue("sizes", []);
       router.push("/dashboard/products");
     } catch (error) {
       toast.error("Something went wrong", error.message);
@@ -68,7 +70,6 @@ export default function AddProducts() {
   if (isLoading) {
     return <p> category data is loading...</p>;
   }
-  console.log("category data", data);
 
   return (
     <form
@@ -91,16 +92,9 @@ export default function AddProducts() {
           </div>
           {/* for quantity */}
           <div className=" w-full">
-            <Label htmlFor="quantity">Product Quantity</Label>
-            <Input
-              {...register("quantity", {
-                valueAsNumber: true,
-              })}
-              type="text"
-              placeholder="Enter your product quantiy"
-              className="mt-1  "
-            />
-            <p className=" text-red-500"> {errors.quantity?.message} </p>
+            <Label htmlFor="quantity">Select Size</Label>
+            <SelectedMultipleSize setValue={setValue} />
+            <p className=" text-red-500"> {errors.sizes?.message} </p>
           </div>
         </div>
         <div className=" flex items-center gap-5 ">
@@ -132,41 +126,41 @@ export default function AddProducts() {
           </div>
         </div>
 
-        {/* for category */}
-        <div className=" w-full">
-          <Label htmlFor="description">Select Category</Label>
-          <Select
-            onValueChange={(value) => {
-              setValue("categoryId", Number(value));
-            }}
-          >
-            <SelectTrigger className=" focus:ring-offset-0 focus:ring-0">
-              <SelectValue placeholder="Select a Category" />
-            </SelectTrigger>
-            <SelectContent>
-              {data?.map((item, index) => {
-                return (
-                  <div key={index}>
-                    <SelectItem value={item.id.toString()}>
-                      {item.name}
-                    </SelectItem>
-                  </div>
-                );
-              })}
-            </SelectContent>
-          </Select>
-          <p className=" text-red-500"> {errors.categoryId?.message} </p>
-        </div>
+        <div className=" flex gap-5 ">
+          <div className=" w-1/2">
+            <Label htmlFor="description">Select Category</Label>
+            <Select
+              onValueChange={(value) => {
+                setValue("categoryId", Number(value));
+              }}
+            >
+              <SelectTrigger className=" focus:ring-offset-0 focus:ring-0">
+                <SelectValue placeholder="Select a Category" />
+              </SelectTrigger>
+              <SelectContent>
+                {data?.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <SelectItem value={item.id.toString()}>
+                        {item.name}
+                      </SelectItem>
+                    </div>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+            <p className=" text-red-500"> {errors.categoryId?.message} </p>
+          </div>
 
-        {/* for description */}
-        <div className=" flex-1">
-          <Label htmlFor="description">Description</Label>
-          <Textarea
-            {...register("description")}
-            placeholder="Enter your description"
-            className="mt-1  "
-          />
-          <p className=" text-red-500"> {errors.description?.message} </p>
+          <div className=" flex-1">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              {...register("description")}
+              placeholder="Enter your description"
+              className="mt-1  "
+            />
+            <p className=" text-red-500"> {errors.description?.message} </p>
+          </div>
         </div>
 
         {/* for image */}

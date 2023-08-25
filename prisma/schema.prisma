@@ -46,9 +46,8 @@ model product {
     deletedAt   DateTime?
     categoryId  Int?
     variants    Json?
-    quantity    Int?
     priceId     String?
-    sizes       String[]
+    sizes       Json[]
     discount    Int?
     category    category? @relation(fields: [categoryId], references: [id])
 }

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; //
 
@@ -9,31 +8,32 @@ import { BiArrowBack } from "react-icons/bi";
 
 const HeroBanner = () => {
   return (
-    <div className="relative text-white text-[20px] w-full max-w-[1360px] mx-auto">
+    <div className="relative text-white text-[20px] w-screen h-[calc(100vh-80px)] overflow-hidden">
       <Carousel
+        className="w-full h-full"
         autoPlay={true}
         infiniteLoop={true}
         showThumbs={false}
         showIndicators={false}
         showStatus={false}
-        renderArrowPrev={(clickHander, hasPrev) => (
+        renderArrowPrev={(clickHandler, hasPrev) => (
           <div
-            onClick={clickHander}
-            className="absolute right-[31px] md:right-[51px] bottom-0 w-[30px] md:w-[50px] h-[30px] md:h-[50px] bg-black z-10 flex items-center justify-center cursor-pointer hover:opacity-90"
+            onClick={clickHandler}
+            className="absolute right-[65px] bottom-9 w-12 aspect-square bg-black z-10 flex items-center justify-center cursor-pointer hover:opacity-90"
           >
             <BiArrowBack className="text-sm md:text-lg" />
           </div>
         )}
-        renderArrowNext={(clickHander, hasNext) => (
+        renderArrowNext={(clickHandler, hasNext) => (
           <div
-            onClick={clickHander}
-            className="absolute right-0 bottom-0  w-[30px] md:w-[50px] h-[30px] md:h-[50px] bg-black z-10 flex items-center justify-center cursor-pointer hover:opacity-90"
+            onClick={clickHandler}
+            className="absolute right-4 bottom-9 w-12 aspect-square bg-black z-10 flex items-center justify-center cursor-pointer hover:opacity-90"
           >
             <BiArrowBack className="rotate-180 text-sm md:text-lg" />
           </div>
         )}
       >
-        <div>
+        <div className="w-full h-full">
           <img
             src="/slide-1.png"
             className="aspect-[16/10] md:aspect-auto object-cover"

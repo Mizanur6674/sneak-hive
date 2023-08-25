@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 export default function Products() {
   const router = useRouter();
+
   const { data, refetch, isLoading } = useQuery({
     queryKey: ["get-product"],
     queryFn: getProducts,

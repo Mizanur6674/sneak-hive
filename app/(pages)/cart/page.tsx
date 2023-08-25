@@ -4,14 +4,10 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 import CartItem from "@/components/CartItem";
-import { useSelector } from "react-redux";
 
 import Wrapper from "@/components/wapper";
-import { loadStripe } from "@stripe/stripe-js";
-import { toast } from "react-toastify";
-import { checkoutSession } from "./server/stripe";
-import getCart from "@/utils/localStorage/getCart";
 import { useAppSelector } from "@/store/store";
+import getCart from "@/utils/localStorage/getCart";
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
@@ -104,6 +100,7 @@ const Cart = () => {
               width={300}
               height={300}
               className="w-[300px] md:w-[400px]"
+              alt="empty cart"
             />
             <span className="text-xl font-bold">Your cart is empty</span>
             <span className="text-center mt-4">

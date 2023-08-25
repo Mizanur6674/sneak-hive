@@ -1,19 +1,26 @@
 "use client";
-import { uploadImages } from "@/utils/uploadImages";
+import { updatedProduct } from "@/action/products/updateProducts";
+import { createPrice } from "@/action/stripe/stripe";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { ProductSchema, ProductType } from "@/types";
+import { uploadImages } from "@/utils/uploadImages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ProductSchema, ProductType } from "@/types";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { createPrice } from "@/action/stripe/stripe";
-import { updatedProduct } from "@/action/products/updateProducts";
 import { FiLoader } from "react-icons/fi";
 
 const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
@@ -68,16 +75,7 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
             <p className=" text-red-500"> {errors.name?.message} </p>
           </div>
           <div className=" w-full">
-            <Label htmlFor="quantity">Product Quantity</Label>
-            <Input
-              {...register("quantity", {
-                valueAsNumber: true,
-              })}
-              type="text"
-              placeholder="Enter your product quantiy"
-              className="mt-1  "
-            />
-            <p className=" text-red-500"> {errors.quantity?.message} </p>
+            <p className=" text-red-500"> {errors.sizes?.message} </p>
           </div>
         </div>
         <div className=" flex items-center gap-5 ">
@@ -93,10 +91,47 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
             />
             <p className=" text-red-500"> {errors.price?.message} </p>
           </div>
+          <div className=" w-full">
+            <Label htmlFor="quantity">Discount</Label>
+            <Input
+              {...register("discount", {
+                valueAsNumber: true,
+              })}
+              type="text"
+              placeholder="Enter your discount price"
+              className="mt-1  "
+            />
+            <p className=" text-red-500"> {errors.discount?.message} </p>
+          </div>
         </div>
 
         {/* for description */}
         <div className=" flex-1">
+          <div className=" w-full">
+            <Label htmlFor="description">Select Category</Label>
+            <Select
+              defaultValue={product.categoryId + ""}
+              onValueChange={(value) => {
+                setValue("categoryId", Number(value));
+              }}
+            >
+              <SelectTrigger className=" focus:ring-offset-0 focus:ring-0">
+                <SelectValue placeholder="Select a Category" />
+              </SelectTrigger>
+              <SelectContent>
+                {product?.category?.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <SelectItem value={item.id.toString()}>
+                        {item.name}
+                      </SelectItem>
+                    </div>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+            <p className=" text-red-500"> {errors.categoryId?.message} </p>
+          </div>
           <Label htmlFor="description">Description</Label>
           <Textarea
             {...register("description")}

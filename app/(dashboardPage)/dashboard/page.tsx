@@ -5,7 +5,6 @@ import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
 import { columns } from "@/components/dashboard/order/table/columns/Columns";
 import { fetches } from "@/lib/refetch";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 function DashboardHome() {
   const { data, refetch, isLoading } = useQuery({
     queryKey: ["get-all-orders"],

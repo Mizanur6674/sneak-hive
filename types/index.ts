@@ -3,10 +3,17 @@ import * as z from "zod";
 
 export const ProductSchema = z.object({
   name: z.string().nonempty("Required Field"),
-  quantity: z.number({
-    required_error: "Required Field",
-    invalid_type_error: "Quantity must be a number",
-  }),
+  sizes: z.array(
+    z.object({
+      size: z.string().nonempty("Required Field"),
+      quantity: z
+        .number({
+          required_error: "Required Field",
+          invalid_type_error: "Quantity must be a number",
+        })
+        .min(1, "Quantity must be greater than 0"),
+    })
+  ),
 
   categoryId: z.number({
     required_error: "Required Field",
@@ -30,7 +37,7 @@ export const ProductSchema = z.object({
 export type ProductType = z.infer<typeof ProductSchema> & {
   priceId: string;
   id?: number;
-  sizes?: string[];
+  category?: any[];
 };
 
 export interface NavListDataType {
