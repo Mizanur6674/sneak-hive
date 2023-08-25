@@ -125,3 +125,9 @@ export interface DashCardDataType {
   value: number | string;
   icon: IconType;
 }
+
+export interface AboutAuthorTopDataType {
+  id: number;
+  icon: IconType;
+  link: string;
+}
