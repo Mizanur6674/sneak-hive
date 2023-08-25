@@ -3,6 +3,7 @@
 import postOrder from "@/action/order/postOrder";
 import { checkoutSession } from "@/action/stripe/stripe";
 import { billingData } from "@/components/shared/data/data";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,10 +11,13 @@ import { BillingDataType, BillingSchema } from "@/types";
 import getCart from "@/utils/localStorage/getCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStripe } from "@stripe/react-stripe-js";
+import { Loader } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 const Billing = () => {
+  const { data } = useSession();
   const stripe = useStripe();
   const cart = getCart();
 
@@ -28,8 +32,6 @@ const Billing = () => {
   });
 
   const onSubmit = async (contact_info: BillingDataType) => {
-    console.log({ contact_info });
-
     try {
       if (!cart.length) {
         return;
@@ -59,7 +61,7 @@ const Billing = () => {
           {billingData.map((item: BillingDataType, index) => {
             return (
               <div key={index}>
-                <Label htmlFor={item.name}>Product Name</Label>
+                <Label htmlFor={item.name}>{item.title}</Label>
                 <Input
                   id={item.name}
                   type="text"
@@ -85,9 +87,10 @@ const Billing = () => {
         />
       </div>
 
-      <button type="submit" className=" btn-primary">
-        Place to Order
-      </button>
+      <Button disabled={isSubmitting} type="submit" className=" btn-primary">
+        Place to Order{" "}
+        {isSubmitting && <Loader className="ml-2 animate-spin" />}
+      </Button>
     </form>
   );
 };
