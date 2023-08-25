@@ -1,5 +1,5 @@
+"use server";
 import prisma from "@/lib/prisma";
-import { ProductType } from "@/types";
 
 export const updatedProduct = async (id: number, values: any) => {
   try {
@@ -11,7 +11,6 @@ export const updatedProduct = async (id: number, values: any) => {
         ...values,
       },
     });
-    console.log("updatedProduct", updateProduct);
 
     return updateProduct;
   } catch (error) {

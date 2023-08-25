@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
+import { removeProduct } from "@/store/addCartSlice";
+import { useAppDispatch } from "@/store/store";
 import addToCart from "@/utils/localStorage/addCart";
 import removeFromCart from "@/utils/localStorage/removeCartItem";
-import { useAppDispatch } from "@/store/store";
-import { removeProduct } from "@/store/addCartSlice";
 
 const CartItem = ({ data, setQuantity }) => {
   const dispatch = useAppDispatch();
@@ -69,10 +68,10 @@ const CartItem = ({ data, setQuantity }) => {
                   return (
                     <option
                       key={i}
-                      value={item}
-                      selected={data.selectedSize === item}
+                      value={item?.size}
+                      selected={data.selectedSize === item?.size}
                     >
-                      {item}
+                      {item?.size}
                     </option>
                   );
                 })}
@@ -87,7 +86,14 @@ const CartItem = ({ data, setQuantity }) => {
                   setQuantity(+e.target.value);
                 }}
               >
-                {Array.from({ length: 10 }, (_, i) => i + 1).map((q, i) => {
+                {Array.from(
+                  {
+                    length: data?.sizes.find(
+                      (q) => q.size === data?.selectedSize
+                    )?.quantity,
+                  },
+                  (_, i) => i + 1
+                ).map((q, i) => {
                   return (
                     <option key={i} value={q} selected={data.quantity === q}>
                       {q}

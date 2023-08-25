@@ -54,18 +54,18 @@ const ProductFilterData = ({ result }) => {
     0
   );
   return (
-    <div className="sb w-full md:py-20">
+    <div className=" w-full md:py-20">
       <ToastContainer />
 
       <div className=" container flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
         {/* left */}
-        <div className="sb w-full md:w-auto flex-[1.5] max-w-[500] lg:max-w-full mx-auto lg:mx-0">
+        <div className="w-full md:w-auto flex-[1.5] max-w-[500] lg:max-w-full mx-auto lg:mx-0">
           <ProductDetailsCarousel images={result?.images[0]} />
         </div>
         {/* right */}
         <div className="flex-[1] py-3">
           {/* Product Title  */}
-          <div className="sb text-[34px] font-semibold mb-2 leading-tight">
+          <div className="text-[34px] font-semibold mb-2 leading-tight">
             {result?.name}
           </div>
           {/* Product subtitle */}
@@ -174,15 +174,6 @@ const ProductFilterData = ({ result }) => {
                   block: "center",
                   behavior: "smooth",
                 });
-                // } else {
-                //   dispatch(
-                //     addToCart({
-                //       ...result?.data[0],
-                //       selectedSize,
-                //     })
-                //   );
-                //   notify();
-                // }
               } else {
                 addToCart(addProduct);
                 dispatch(setProduct(result.id));

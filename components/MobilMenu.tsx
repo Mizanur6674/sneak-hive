@@ -1,19 +1,15 @@
-import React from "react";
+"use client";
+import { getCategory } from "@/action/categories/getCategoryId";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import React from "react";
 import { BsChevronDown } from "react-icons/bs";
 
-const data = [
+const menuData = [
   { id: 1, name: "Home", url: "/" },
   { id: 2, name: "About", url: "/about" },
   { id: 3, name: "Categories", subMenu: true },
   { id: 4, name: "Contact", url: "/contact" },
-];
-
-const subMenuData = [
-  { id: 1, name: "Jordan", doc_count: 11 },
-  { id: 2, name: "Sneakers", doc_count: 8 },
-  { id: 3, name: "Running shoes", doc_count: 64 },
-  { id: 4, name: "Football shoes", doc_count: 107 },
 ];
 
 const MenuMobile = ({
@@ -22,9 +18,16 @@ const MenuMobile = ({
   setMobileMenu,
   categories,
 }) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["get-category"],
+    queryFn: getCategory,
+  });
+  if (isLoading) {
+    return <p> category data is loading...</p>;
+  }
   return (
     <ul className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-white border-t text-black">
-      {data.map((item) => {
+      {menuData.map((item) => {
         return (
           <React.Fragment key={item.id}>
             {!!item?.subMenu ? (
@@ -39,20 +42,17 @@ const MenuMobile = ({
 
                 {showCatMenu && (
                   <ul className="bg-black/[0.05] -mx-5 mt-4 -mb-4">
-                    {categories?.map(({ attributes: c, id }) => {
+                    {data?.map((item, index) => {
                       return (
                         <Link
-                          key={id}
-                          href={`/category/${c.slug}`}
-                          onClick={() => {
-                            setShowCatMenu(false);
-                            setMobileMenu(false);
-                          }}
+                          key={index}
+                          href={`/category/${item?.slug}`}
+                          onClick={() => setShowCatMenu(false)}
                         >
-                          <li className="py-4 px-8 border-t flex justify-between">
-                            {c.name}
+                          <li className="h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md">
+                            {item.name}
                             <span className="opacity-50 text-sm">
-                              {`(${c.products.data.length})`}
+                              {`(${item?.products?.length})`}
                             </span>
                           </li>
                         </Link>

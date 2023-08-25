@@ -95,10 +95,7 @@ export default function AddProducts() {
           {/* for quantity */}
           <div className=" w-full">
             <Label htmlFor="quantity">Select Size</Label>
-            <SelectedMultipleSize
-              setValue={setValue}
-              selectedValues={selectedValues}
-            />
+            <SelectedMultipleSize setValue={setValue} />
             <p className=" text-red-500"> {errors.sizes?.message} </p>
           </div>
         </div>

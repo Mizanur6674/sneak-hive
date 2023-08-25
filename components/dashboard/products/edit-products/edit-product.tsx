@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { setDefaultSizes } from "@/store/selectedSizeSlice";
+import { useAppDispatch } from "@/store/store";
 import { ProductSchema, ProductType } from "@/types";
 import { uploadImages } from "@/utils/uploadImages";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,8 +25,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiLoader } from "react-icons/fi";
 import SelectedMultipleSize from "../SelectedMultipleSize";
-import { useAppDispatch } from "@/store/store";
-import { setDefultSizes } from "@/store/selectedSizeSlice";
 
 const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
   const dispatch = useAppDispatch();
@@ -35,14 +35,14 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
   const [preview, setPreview] = useState<string | null>(image);
   const router = useRouter();
   useEffect(() => {
-    dispatch(setDefultSizes(product.sizes as any));
+    dispatch(setDefaultSizes(product.sizes as any));
   }, [product]);
 
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isValid, isSubmitting, isDirty },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<ProductType>({
     defaultValues: product,
     resolver: zodResolver(ProductSchema),
@@ -55,26 +55,28 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
         priceId = await createPrice(data.price);
       }
       await ProductSchema.parseAsync(data);
-      const updatProduct = await updatedProduct(product.id, {
+      await updatedProduct(product.id, {
         ...data,
         priceId,
       });
-      if (updatProduct) {
-        toast.success("Product edited successfully");
-        router.push("/dashboard/products");
-      }
+      toast.success("Product edited successfully");
+      router.push("/dashboard/products");
     } catch (error) {
       toast.error("Something went wrong", error.message);
       console.log(error);
     }
   };
 
+  if (!product.price) {
+    return <div>loading...</div>;
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className=" w-full flex flex-col items-center justify-center "
     >
-      <div className=" space-y-8 bg-white h-auto w-2/3 shadow-lg py-5 px-10 rounded">
+      <div className=" space-y-8 bg-white dark:bg-gray-900 h-auto w-2/3 shadow-lg py-5 px-10 rounded">
         <h5 className=" text-center">Edit Product</h5>
         <div className=" flex items-center gap-5 ">
           <div className=" w-full">
@@ -196,7 +198,7 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
           </div>
         )}
 
-        <Button disabled={!isValid || isSubmitting || !isDirty} type="submit">
+        <Button disabled={isSubmitting || !isDirty} type="submit">
           {!isSubmitting ? (
             <span>Submit</span>
           ) : (

@@ -1,4 +1,3 @@
-import { ProductType } from "@/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface InitialStateProps {
@@ -37,7 +36,7 @@ const selectedSizeSlice = createSlice({
       });
     },
 
-    setDefultSizes: (
+    setDefaultSizes: (
       state,
       actions: PayloadAction<Array<{ size: string; quantity: number }>>
     ) => {
@@ -50,6 +49,6 @@ export const {
   setSizesValue,
   deleteSizesValue,
   setSizesQuantity,
-  setDefultSizes,
+  setDefaultSizes,
 } = selectedSizeSlice.actions;
 export default selectedSizeSlice.reducer;
