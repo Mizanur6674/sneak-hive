@@ -21,6 +21,7 @@ export default async function EditProductPage({
     discount: result.discount,
     categoryId: result.categoryId,
     category: category,
+    sizes: result.sizes,
   };
 
   return (

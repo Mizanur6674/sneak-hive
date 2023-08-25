@@ -28,7 +28,7 @@ const Header = () => {
   const [cart, setCart] = React.useState(0);
   useEffect(() => {
     setCart(getCart().length);
-  }, [cart, product.length]);
+  }, [product.length]);
 
   const controlNavbar = () => {
     if (window.scrollY > 200) {

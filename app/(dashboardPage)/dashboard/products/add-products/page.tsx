@@ -30,6 +30,7 @@ import SelectedMultipleSize from "@/components/dashboard/products/SelectedMultip
 import { fetches } from "@/lib/refetch";
 
 export default function AddProducts() {
+  const selectedValues = new Map<string, number>();
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const router = useRouter();
@@ -49,7 +50,8 @@ export default function AddProducts() {
     try {
       const priceId = await createPrice(data.price);
       await ProductSchema.parseAsync(data);
-      await addProduct({ ...data, priceId });
+      const newProduct = await addProduct({ ...data, priceId });
+
       toast.success("Product Added");
       reset();
       setPreview(null);
@@ -93,7 +95,10 @@ export default function AddProducts() {
           {/* for quantity */}
           <div className=" w-full">
             <Label htmlFor="quantity">Select Size</Label>
-            <SelectedMultipleSize setValue={setValue} />
+            <SelectedMultipleSize
+              setValue={setValue}
+              selectedValues={selectedValues}
+            />
             <p className=" text-red-500"> {errors.sizes?.message} </p>
           </div>
         </div>

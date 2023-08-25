@@ -3,12 +3,14 @@ import addCartSlice from "./addCartSlice";
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import addWishListSlice from "./addWishListSlice";
+import selectedSizeSlice from "./selectedSizeSlice";
 
 export const store = configureStore({
   reducer: {
     addProductCart: addCartSlice,
     cart: cartSlice,
     addWishList: addWishListSlice,
+    selectedSizes: selectedSizeSlice,
   },
 });
 
