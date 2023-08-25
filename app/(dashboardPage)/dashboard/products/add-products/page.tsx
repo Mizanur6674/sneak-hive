@@ -11,10 +11,21 @@ import { uploadImages } from "@/utils/uploadImages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiLoader } from "react-icons/fi";
+import { useQuery } from "@tanstack/react-query";
+import { getCategory } from "@/action/categories/getCategoryId";
+
+import { fetches } from "@/lib/refetch";
 
 export default function AddProducts() {
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
@@ -35,6 +46,7 @@ export default function AddProducts() {
   const onSubmit = async (data: ProductType) => {
     try {
       // const priceId = await createPrice(data.price);
+
       await ProductSchema.parseAsync(data);
       await addProduct(data);
       toast.success("Product Added");
@@ -47,6 +59,17 @@ export default function AddProducts() {
     }
   };
 
+  //  data fecthing for section
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["get-category"],
+    queryFn: getCategory,
+  });
+  fetches.refetchOrders = refetch;
+  if (isLoading) {
+    return <p> category data is loading...</p>;
+  }
+  console.log("category data", data);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -55,6 +78,7 @@ export default function AddProducts() {
       <div className=" space-y-8 h-auto w-2/3 shadow-lg py-5 px-10 rounded dark:bg-gray-900">
         <h5 className=" text-center">Add Product</h5>
         <div className=" flex items-center gap-5 ">
+          {/* for name */}
           <div className=" w-full">
             <Label htmlFor="name">Product Name</Label>
             <Input
@@ -65,6 +89,7 @@ export default function AddProducts() {
             />
             <p className=" text-red-500"> {errors.name?.message} </p>
           </div>
+          {/* for quantity */}
           <div className=" w-full">
             <Label htmlFor="quantity">Product Quantity</Label>
             <Input
@@ -79,6 +104,7 @@ export default function AddProducts() {
           </div>
         </div>
         <div className=" flex items-center gap-5 ">
+          {/* for price */}
           <div className=" w-full">
             <Label htmlFor="price">Product Price</Label>
             <Input
@@ -91,6 +117,45 @@ export default function AddProducts() {
             />
             <p className=" text-red-500"> {errors.price?.message} </p>
           </div>
+          {/* for discount */}
+          <div className=" w-full">
+            <Label htmlFor="quantity">Discount</Label>
+            <Input
+              {...register("discount", {
+                valueAsNumber: true,
+              })}
+              type="text"
+              placeholder="Enter your discount price"
+              className="mt-1  "
+            />
+            <p className=" text-red-500"> {errors.discount?.message} </p>
+          </div>
+        </div>
+
+        {/* for category */}
+        <div className=" w-full">
+          <Label htmlFor="description">Select Category</Label>
+          <Select
+            onValueChange={(value) => {
+              setValue("categoryId", Number(value));
+            }}
+          >
+            <SelectTrigger className=" focus:ring-offset-0 focus:ring-0">
+              <SelectValue placeholder="Select a Category" />
+            </SelectTrigger>
+            <SelectContent>
+              {data?.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <SelectItem value={item.id.toString()}>
+                      {item.name}
+                    </SelectItem>
+                  </div>
+                );
+              })}
+            </SelectContent>
+          </Select>
+          <p className=" text-red-500"> {errors.categoryId?.message} </p>
         </div>
 
         {/* for description */}
@@ -103,6 +168,8 @@ export default function AddProducts() {
           />
           <p className=" text-red-500"> {errors.description?.message} </p>
         </div>
+
+        {/* for image */}
         <div>
           {preview && (
             <div className=" relative w-40 h-40 object-contain">

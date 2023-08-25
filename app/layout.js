@@ -7,11 +7,9 @@ import Footer from "@/components/footer";
 import { Provider } from "react-redux";
 import { usePathname } from "next/navigation";
 
-import store from "@/store/store";
-
-import Cart from "./cart/page";
 // import Login from "./auth/login/page";
 import { SessionProvider } from "next-auth/react";
+import { store } from "@/store/store";
 
 // const inter = Inter({ subsets: ["latin"] });
 export const metadata = {

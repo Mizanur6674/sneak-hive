@@ -7,6 +7,17 @@ export const ProductSchema = z.object({
     required_error: "Required Field",
     invalid_type_error: "Quantity must be a number",
   }),
+
+  categoryId: z.number({
+    required_error: "Required Field",
+    invalid_type_error: "Categories must be a number",
+  }),
+
+  discount: z.number({
+    required_error: "Required Field",
+    invalid_type_error: "discount must be a number",
+  }),
+
   description: z.string().nonempty("Required Field"),
 
   price: z.number({
@@ -19,6 +30,7 @@ export const ProductSchema = z.object({
 export type ProductType = z.infer<typeof ProductSchema> & {
   priceId: string;
   id?: number;
+  sizes?: string[];
 };
 
 export interface NavListDataType {

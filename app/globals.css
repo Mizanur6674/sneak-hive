@@ -95,10 +95,27 @@
 }
 @layer base {
   .sb {
-    @apply border-red-500;
+    @apply border border-red-500;
   }
   body {
     @apply box-border overflow-x-hidden;
+  }
+  .container {
+    margin: 0 auto;
+    width: calc(100% - 40px);
+    max-width: 1480px;
+  }
+
+  @media (min-width: 960px) {
+    .container {
+      width: calc(100% - 120px);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .container {
+      width: calc(100% - 180px);
+    }
   }
 }
 

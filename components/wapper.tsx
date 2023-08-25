@@ -1,7 +1,10 @@
 "use client";
 import React from "react";
-
-const Wrapper = ({ children, className }) => {
+type Props = {
+  children: React.ReactNode;
+  className?: string;
+};
+const Wrapper = ({ children, className }: Props) => {
   return (
     <div
       className={`w-full max-w-[1280px] px-5 md:px-10 mx-auto ${

@@ -1,33 +1,35 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { updateCart, removeFromCart } from "@/store/cartSlice";
-import { useDispatch } from "react-redux";
-import Product from "@/app/product/[slug]/page";
 
-const CartItem = ({ data }) => {
-  const p = data.attributes;
+import addToCart from "@/utils/localStorage/addCart";
+import removeFromCart from "@/utils/localStorage/removeCartItem";
+import { useAppDispatch } from "@/store/store";
+import { removeProduct } from "@/store/addCartSlice";
 
-  const dispatch = useDispatch();
+const CartItem = ({ data, setQuantity }) => {
+  const dispatch = useAppDispatch();
 
-  const updateCartItem = (e, key) => {
-    let payload = {
-      key,
-      val: key === "quantity" ? parseInt(e.target.value) : e.target.value,
-      id: data.id,
-    };
-    dispatch(updateCart(payload));
-  };
+  console.log("data", data);
 
-  // console.log({ data });
-  console.log(p);
+  // const updateCartItem = (e, key) => {
+  //   let payload = {
+  //     key,
+  //     val: key === "quantity" ? parseInt(e.target.value) : e.target.value,
+  //     id: data.id,
+  //   };
+  //   dispatch(updateCart(payload));
+  // };
+
   return (
     <div className="flex py-5 gap-3 md:gap-5 border-b">
       {/* IMAGE START */}
       <div className="shrink-0 aspect-square w-[50px] md:w-[120px]">
         <Image
-          src={data?.attributes?.formats?.thumbnail?.url}
-          alt={p?.name}
+          src={data?.images[0]}
+          alt={data?.name}
           width={120}
           height={120}
         />
@@ -41,11 +43,11 @@ const CartItem = ({ data }) => {
           </div>
           {/* PRODUCT SUBTITLE */}
           <div className="text-sm md:text-md font-medium text-black/[0.5] block md:hidden">
-            {data?.attributes?.subtitle}
+            {data?.subtitle}
           </div>
           {/* PEODUCT PRICE */}
           <div className="text-sm md:text-md font-bold text-black/[0.5] mt-2">
-            MRP : &#2547;{data?.oneQuantityPrice}
+            MRP : &#2547;{data?.price}
           </div>
         </div>
         {/* PRODUCT SUBTITLE */}
@@ -59,17 +61,18 @@ const CartItem = ({ data }) => {
               <div className="font-semibold">Size:</div>
               <select
                 className="hover:text-black"
-                onChange={(e) => updateCartItem(e, "selectedSize")}
+                onChange={(e) =>
+                  addToCart({ ...data, selectedSize: e.target.value })
+                }
               >
                 {data?.sizes?.map((item, i) => {
                   return (
                     <option
                       key={i}
-                      value={item.size}
-                      disabled={!item.enabled ? true : false}
-                      selected={data.selectedSize === item.size}
+                      value={item}
+                      selected={data.selectedSize === item}
                     >
-                      {item.size}
+                      {item}
                     </option>
                   );
                 })}
@@ -79,7 +82,10 @@ const CartItem = ({ data }) => {
               <div className="font-semibold">Quantity:</div>
               <select
                 className="hover:text-black"
-                onChange={(e) => updateCartItem(e, "quantity")}
+                onChange={(e) => {
+                  addToCart({ ...data, quantity: +e.target.value });
+                  setQuantity(+e.target.value);
+                }}
               >
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((q, i) => {
                   return (
@@ -92,7 +98,10 @@ const CartItem = ({ data }) => {
             </div>
           </div>
           <RiDeleteBin6Line
-            onClick={() => dispatch(removeFromCart({ id: data.id }))}
+            onClick={() => {
+              removeFromCart(data.id);
+              dispatch(removeProduct(data.id));
+            }}
             className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]"
           />
         </div>

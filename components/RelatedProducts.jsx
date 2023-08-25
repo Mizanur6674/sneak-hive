@@ -25,8 +25,8 @@ const RelatedProducts = ({ products }) => {
       <div className="text-2xl font-bold mb-5">You Might Also Like</div>
       <Carousel
         responsive={responsive}
-        containerClass="-mx-[10px]"
-        itemClass="px-[10px]"
+        containerclassName="-mx-[10px]"
+        itemclassName="px-[10px]"
       >
         {products?.data?.map((product) => (
           <ProductCard key={product?.id} data={product} />

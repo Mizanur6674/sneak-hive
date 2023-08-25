@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { fetchDataFromApi } from "@/utils/api";
+
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -13,17 +13,17 @@ const handler = NextAuth({
       name: "credentials",
       //@ts-ignore
       async authorize(credentials) {
-        const user = await fetchDataFromApi(
-          "/api/customers?filters[email][$eq]=" + credentials.email
-        );
+        // const user = await fetchDataFromApi(
+        //   "/api/customers?filters[email][$eq]=" + credentials.email
+        // );
 
-        if (user?.data.length == 0) {
-          throw new Error("User not found");
-        }
-        if (credentials.password != user?.data[0].attributes.pass) {
-          throw new Error("Password incorrect");
-        }
-        console.log(user?.data, credentials);
+        // if (user?.data.length == 0) {
+        //   throw new Error("User not found");
+        // }
+        // if (credentials.password != user?.data[0].attributes.pass) {
+        //   throw new Error("Password incorrect");
+        // }
+        // console.log(user?.data, credentials);
         // // Check if user exists
         // if (!user) {
         //   return null;

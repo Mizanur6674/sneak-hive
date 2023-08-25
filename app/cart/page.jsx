@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import CartItem from "@/components/CartItem";
 import { useSelector } from "react-redux";
@@ -10,47 +10,31 @@ import Wrapper from "@/components/wapper";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
 import { checkoutSession } from "./server/stripe";
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRAPI_PUBLISHABLE_KEY
-);
+import getCart from "@/utils/localStorage/getCart";
+import { useAppSelector } from "@/store/store";
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
-  const { cartItems } = useSelector((state) => state.cart);
+  const [quantity, setQuantity] = useState(1);
+  const { product } = useAppSelector((state) => state.addProductCart);
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    setCart(getCart());
+  }, [product, quantity]);
 
   const subTotal = useMemo(() => {
-    const subTotals = cartItems.reduce(
-      (total, val) => total + val.oneQuantityPrice * val.quantity,
+    const subTotals = cart.reduce(
+      (total, val) => total + val.price * val.quantity,
       0
     );
     return subTotals;
-  }, [cartItems]);
+  }, [cart]);
 
-  const handlePayment = async () => {
-    try {
-      setLoading(true);
-      const stripe = await stripePromise;
-      const session = JSON.parse(await checkoutSession(cartItems));
-      // const res = await addOrder("/api/orders", {
-      //   products: cartItems,
-      //   payment_id: session.id,
-      // });
-
-      await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-    } catch (error) {
-      toast.error(error.message);
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
   //
   return (
     <div className="w-full md:py-20">
       <Wrapper>
-        {cartItems.length > 0 && (
+        {cart.length > 0 && (
           <>
             {/* HEADING AND PARAGRAPH START */}
             <div className="text-center max-w-[800px] mx-auto mt-8 md:mt-0">
@@ -65,8 +49,12 @@ const Cart = () => {
               {/* CART ITEMS START */}
               <div className="flex-[2]">
                 <div className="text-lg font-bold">Cart Items</div>
-                {cartItems.map((item) => (
-                  <CartItem key={item.id} data={item} />
+                {cart.map((item) => (
+                  <CartItem
+                    key={item.id}
+                    setQuantity={(e) => setQuantity(e)}
+                    data={item}
+                  />
                 ))}
               </div>
               {/* CART ITEMS END */}
@@ -81,7 +69,7 @@ const Cart = () => {
                       Subtotal
                     </div>
                     <div className="text-md md:text-lg font-medium text-black">
-                      &#8377;{subTotal}
+                      &#2547; {subTotal}
                     </div>
                   </div>
                   <div className="text-sm md:text-md py-5 border-t mt-5">
@@ -95,7 +83,7 @@ const Cart = () => {
                 {/* BUTTON START */}
                 <button
                   className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75 flex items-center gap-2 justify-center"
-                  onClick={handlePayment}
+                  onClick={() => {}}
                 >
                   Checkout
                   {loading && <img src="/spinner.svg" />}
@@ -109,7 +97,7 @@ const Cart = () => {
         )}
 
         {/* This is empty screen */}
-        {cartItems.length < 1 && (
+        {cart.length < 1 && (
           <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
             <Image
               src="/empty-cart.jpg"

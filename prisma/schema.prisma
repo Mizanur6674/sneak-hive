@@ -48,6 +48,8 @@ model product {
     variants    Json?
     quantity    Int?
     priceId     String?
+    sizes       String[]
+    discount    Int?
     category    category? @relation(fields: [categoryId], references: [id])
 }
 

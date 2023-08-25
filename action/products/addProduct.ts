@@ -14,6 +14,7 @@ const addProduct = async (values: ProductType) => {
         name,
         slug: slugify(name),
         ...rest,
+        sizes: ["S", "M", "L", "XL", "XXL", "XXXL"],
       },
     });
     console.log({ newProduct });
