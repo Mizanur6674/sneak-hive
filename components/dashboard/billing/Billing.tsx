@@ -56,13 +56,17 @@ const Billing = () => {
 
       <div className=" my-16 lg:my-20">
         <div className=" grid md:grid-cols-2 gap-x-20 lg:gap-x-28 gap-y-10 md:gap-y-20">
-          {billingData.map((item, index) => {
+          {billingData.map((item: BillingDataType, index) => {
             return (
               <div key={index}>
-                <Label htmlFor="name">Product Name</Label>
+                <Label htmlFor={item.name}>Product Name</Label>
                 <Input
+                  id={item.name}
                   type="text"
-                  {...register("name")}
+                  {...(register(item.name as any),
+                  {
+                    required: item.required,
+                  })}
                   placeholder="Enter your product name"
                   className="mt-1  "
                 />
