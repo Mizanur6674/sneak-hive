@@ -33,12 +33,22 @@ export const ProductSchema = z.object({
   }),
   images: z.string().array().nonempty("Required Field"),
 });
-
 export type ProductType = z.infer<typeof ProductSchema> & {
   priceId: string;
-  id?: number;
+  id: number;
   category?: any[];
 };
+
+export const BillingSchema = z.object({
+  full_name: z.string().nonempty("Required Field"),
+  district: z.string().nonempty("Required Field"),
+  city: z.string().nonempty("Required Field"),
+  postal_code: z.string().nonempty("Required Field"),
+  area: z.string().nonempty("Required Field"),
+  phone: z.string().nonempty("Required Field"),
+  email: z.string().nonempty("Required Field"),
+});
+export type BillingType = z.infer<typeof BillingSchema>;
 
 export interface NavListDataType {
   id: number;
@@ -51,6 +61,7 @@ export interface SocialDataType {
   id: number;
   img: string;
 }
+
 export interface FooterDataType {
   id: number;
   title: string;
@@ -131,4 +142,10 @@ export interface DashCardDataType {
   label: string;
   value: number | string;
   icon: IconType;
+}
+
+export interface AboutAuthorTopDataType {
+  id: number;
+  icon: IconType;
+  link: string;
 }

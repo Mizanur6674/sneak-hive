@@ -8,27 +8,29 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  deleteSizesValue,
+  setSizesQuantity,
+  setSizesValue,
+} from "@/store/selectedSizeSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { ProductType } from "@/types";
 import { allSizes } from "@/utils/sizes";
-import { useEffect, useState } from "react";
+
 import { UseFormSetValue } from "react-hook-form";
-const selectedValues = new Map<string, number>();
+
 type Props = {
   setValue: UseFormSetValue<ProductType>;
 };
 function SelectedMultipleSize({ setValue }: Props) {
-  const [select, setSelect] = useState("");
-  useEffect(() => {}, [select]);
+  const { selectedSizes } = useAppSelector((state) => state.selectedSizes);
+  const dispatch = useAppDispatch();
 
   return (
     <Popover
       onOpenChange={(e) => {
         if (!e) {
-          const sizes = Array.from(selectedValues).map(([key, value]) => ({
-            size: key,
-            quantity: value,
-          }));
-          setValue("sizes", sizes, {
+          setValue("sizes", selectedSizes, {
             shouldValidate: true,
             shouldDirty: true,
             shouldTouch: true,
@@ -42,26 +44,24 @@ function SelectedMultipleSize({ setValue }: Props) {
           size="sm"
           className="text-gray-500 font-normal flex justify-start w-full h-full py-2"
         >
-          {selectedValues.size
-            ? [...selectedValues.keys()].map((size) => size + " ")
+          {selectedSizes.length
+            ? selectedSizes.map((size) => size.size + " ")
             : "Select Sizes..."}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[380px] p-0" align="start">
+      <PopoverContent className="w-full p-0" align="start">
         {allSizes.map((size) => {
-          const isSelected = selectedValues.has(size);
+          const isSelected = selectedSizes.find((value) => value.size === size);
           return (
             <div key={size} className="py-1 px-2 flex items-center gap-5">
               <div className="flex items-center gap-1 w-1/4">
                 <Checkbox
-                  defaultChecked={isSelected}
+                  defaultChecked={isSelected ? true : false}
                   onCheckedChange={(checked) => {
                     if (checked) {
-                      selectedValues.set(size, 1);
-                      setSelect(size);
+                      dispatch(setSizesValue({ size, quantity: 1 }));
                     } else {
-                      selectedValues.delete(size);
-                      setSelect("");
+                      dispatch(deleteSizesValue(size));
                     }
                   }}
                   id={size}
@@ -70,11 +70,12 @@ function SelectedMultipleSize({ setValue }: Props) {
                 <Label htmlFor={size}>{size}</Label>
               </div>
               <Input
-                value={selectedValues.get(size) || 1}
+                value={isSelected?.quantity || 1}
                 disabled={!isSelected}
                 onChange={(e) => {
-                  selectedValues.set(size, +e.target.value);
-                  setSelect(e.target.value);
+                  dispatch(
+                    setSizesQuantity({ size, quantity: +e.target.value })
+                  );
                 }}
                 className="flex-1 disabled:bg-gray-100"
                 type="number"

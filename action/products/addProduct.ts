@@ -16,8 +16,6 @@ const addProduct = async (values: ProductType) => {
         ...rest,
       },
     });
-    console.log({ newProduct });
-
     return newProduct;
   } catch (error) {
     console.log(error);

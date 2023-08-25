@@ -18,17 +18,25 @@ import { uploadImages } from "@/utils/uploadImages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiLoader } from "react-icons/fi";
+import SelectedMultipleSize from "../SelectedMultipleSize";
+import { useAppDispatch } from "@/store/store";
+import { setDefultSizes } from "@/store/selectedSizeSlice";
 
 const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
+  const dispatch = useAppDispatch();
+
   const image: string | null =
     product.images.length > 0 ? product.images[0] : null;
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [preview, setPreview] = useState<string | null>(image);
   const router = useRouter();
+  useEffect(() => {
+    dispatch(setDefultSizes(product.sizes as any));
+  }, [product]);
 
   const {
     register,
@@ -47,9 +55,14 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
         priceId = await createPrice(data.price);
       }
       await ProductSchema.parseAsync(data);
-      await updatedProduct(product.id, { ...data, priceId });
-      toast.success("Product edited successfully");
-      router.push("/dashboard/products");
+      const updatProduct = await updatedProduct(product.id, {
+        ...data,
+        priceId,
+      });
+      if (updatProduct) {
+        toast.success("Product edited successfully");
+        router.push("/dashboard/products");
+      }
     } catch (error) {
       toast.error("Something went wrong", error.message);
       console.log(error);
@@ -75,6 +88,8 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
             <p className=" text-red-500"> {errors.name?.message} </p>
           </div>
           <div className=" w-full">
+            <Label>Selected Sizes</Label>
+            <SelectedMultipleSize setValue={setValue} />
             <p className=" text-red-500"> {errors.sizes?.message} </p>
           </div>
         </div>

@@ -7,6 +7,10 @@ import { GiFruitBowl } from "react-icons/gi";
 import { PiShoppingCartSimpleFill, PiUsersThree } from "react-icons/pi";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { DashCardDataType, DashboardSidebarDataType } from "../types";
+import { AiFillInstagram } from "react-icons/ai";
+import { BsPinterest, BsTwitter } from "react-icons/bs";
+import { TiSocialFacebook } from "react-icons/ti";
+import { AboutAuthorTopDataType, BillingDataType } from "@/types";
 
 // export const navListData: NavListDataType[] = [
 //   // {
@@ -200,64 +204,57 @@ import { DashCardDataType, DashboardSidebarDataType } from "../types";
 
 //Billing Data
 
-// export const billingData: BillingDataType[] = [
-//   {
-//     id: 1,
-//     title: "Full name",
-//     name: "full_name",
-//     control: "input",
-//     required: true,
-//   },
-//   {
-//     id: 2,
-//     title: "District",
-//     name: "district",
-//     control: "input",
-//     required: true,
-//   },
-//   {
-//     id: 3,
-//     title: "Town/City",
-//     name: "city",
-//     control: "input",
-//     required: true,
-//   },
-//   {
-//     id: 4,
-//     title: "Postal code",
-//     name: "postal_code",
-//     control: "input",
-//     required: true,
-//   },
-//   {
-//     id: 5,
-//     title: "Area",
-//     name: "area",
-//     control: "input",
-//     required: true,
-//   },
-//   {
-//     id: 6,
-//     title: "Phone number",
-//     name: "phone",
-//     control: "input",
-//     required: true,
-//   },
-//   {
-//     id: 7,
-//     title: "E-mail address",
-//     name: "email",
-//     control: "input",
-//     required: true,
-//   },
-//   {
-//     id: 8,
-//     title: "Alternative phone number",
-//     name: "alt_phone",
-//     control: "input",
-//     required: false,
-//   },
-// ];
+export const billingData: BillingDataType[] = [
+  {
+    id: 1,
+    title: "Full name",
+    name: "full_name",
+    control: "input",
+  },
+  {
+    id: 2,
+    title: "District",
+    name: "district",
+    control: "input",
+  },
+  {
+    id: 3,
+    title: "Town/City",
+    name: "city",
+    control: "input",
+  },
+  {
+    id: 4,
+    title: "Postal code",
+    name: "postal_code",
+    control: "input",
+  },
+  {
+    id: 5,
+    title: "Area",
+    name: "area",
+    control: "input",
+  },
+  {
+    id: 6,
+    title: "Phone number",
+    name: "phone",
+    control: "input",
+  },
+  {
+    id: 7,
+    title: "E-mail address",
+    name: "email",
+    control: "input",
+  },
+  {
+    id: 8,
+    title: "Alternative phone number",
+    name: "alt_phone",
+    control: "input",
+    required: false,
+  },
+];
 
 // export const signupData: SignupData[] = [
 //   {
@@ -482,24 +479,6 @@ export const dashboardSidebarData: DashboardSidebarDataType[] = [
     icon: SiReacthookform,
     href: "/dashboard/products",
   },
-  // {
-  //   id: 3,
-  //   title: "Chart",
-  //   icon: AiFillPieChart,
-  //   href: "/dashboard",
-  // },
-  // {
-  //   id: 4,
-  //   title: "Table",
-  //   icon: PiTableDuotone,
-  //   href: "/dashboard",
-  // },
-  // {
-  //   id: 5,
-  //   title: "Pages",
-  //   icon: RiPagesFill,
-  //   href: "/dashboard",
-  // },
 ];
 // dashboard card data
 
@@ -528,4 +507,10 @@ export const dashCardData: DashCardDataType[] = [
     value: "386",
     icon: PiShoppingCartSimpleFill,
   },
+];
+export const aboutAuthorTopData: AboutAuthorTopDataType[] = [
+  { id: 1, icon: BsTwitter, link: "www.twitter.com" },
+  { id: 2, icon: TiSocialFacebook, link: "www.facebook.com" },
+  { id: 3, icon: AiFillInstagram, link: "www.instagram.com" },
+  { id: 4, icon: BsPinterest, link: "www.pinterest.com" },
 ];

@@ -1,75 +1,75 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model user {
-    id        Int      @id @default(autoincrement())
-    name      String?  @db.VarChar(255)
-    image     String?  @db.VarChar(255)
-    decs      String?  @db.VarChar(1000)
-    email     String   @unique @db.VarChar(255)
-    role      role     @default(ADMIN)
-    password  String   @db.VarChar(255)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
-    order     order[]
+  id        Int      @id @default(autoincrement())
+  name      String?  @db.VarChar(255)
+  image     String?  @db.VarChar(255)
+  decs      String?  @db.VarChar(1000)
+  email     String   @unique @db.VarChar(255)
+  role      role     @default(ADMIN)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  order     order[]
 }
 
 model order {
-    id           Int         @id @default(autoincrement())
-    orderNumber  String      @unique @default(uuid())
-    createdAt    DateTime    @default(now())
-    updatedAt    DateTime    @updatedAt
-    contact_info Json
-    items        Json
-    userId       Int
-    user         user        @relation(fields: [userId], references: [id])
-    status       orderStatus @default(PENDING)
-    payment_id   String      @unique
+  id           Int         @id @default(autoincrement())
+  orderNumber  String      @unique @default(uuid())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  contact_info Json
+  items        Json
+  userId       Int
+  status       orderStatus @default(PENDING)
+  payment_id   String      @unique
+  user         user        @relation(fields: [userId], references: [id])
 }
 
 model product {
-    id          Int       @id @default(autoincrement())
-    name        String
-    slug        String    @unique
-    description String?
-    active      Boolean
-    price       Float     @default(0)
-    images      Json
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @default(now())
-    deletedAt   DateTime?
-    categoryId  Int?
-    variants    Json?
-    priceId     String?
-    sizes       Json[]
-    discount    Int?
-    category    category? @relation(fields: [categoryId], references: [id])
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique
+  description String?
+  active      Boolean
+  price       Float     @default(0)
+  images      Json
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  deletedAt   DateTime?
+  categoryId  Int?
+  variants    Json?
+  priceId     String?
+  sizes       Json[]
+  discount    Int?
+  category    category? @relation(fields: [categoryId], references: [id])
 }
 
 model category {
-    id          Int       @id @default(autoincrement())
-    name        String
-    slug        String    @unique
-    description String?
-    active      Boolean
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @default(now())
-    products    product[]
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique
+  description String?
+  active      Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  products    product[]
 }
 
 enum role {
-    USER
-    ADMIN
+  USER
+  ADMIN
 }
 
 enum orderStatus {
-    PENDING
-    CONFIRMED
-    PAID
+  PENDING
+  CONFIRMED
+  PAID
 }

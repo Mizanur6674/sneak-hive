@@ -40,6 +40,5 @@ export const createPrice = async (amount: number) => {
     return price.id;
   } catch (error) {
     console.log(error);
-    return error;
   }
 };
