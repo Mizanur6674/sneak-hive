@@ -1,4 +1,5 @@
 "use client";
+
 import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
 import { columns } from "@/components/dashboard/order/table/columns/Columns";
 import Wrapper from "@/components/wapper";
@@ -20,7 +21,6 @@ function DashboardHome() {
   });
 
   fetches.refetchOrders = refetch;
-  console.log({ orders });
 
   if (isLoading || !orders || !data) {
     return (

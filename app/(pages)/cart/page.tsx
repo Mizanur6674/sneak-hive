@@ -19,10 +19,13 @@ const Cart = () => {
   }, [product, quantity]);
 
   const subTotal = useMemo(() => {
-    const subTotals = cart.reduce(
-      (total, val) => total + val.price * val.quantity,
-      0
-    );
+    const subTotals = cart.reduce((total, val) => {
+      if (val?.discount) {
+        return total + (val?.price - (val?.discount || 0)) * val?.quantity;
+      } else {
+        return total + val.price * val.quantity;
+      }
+    }, 0);
     return subTotals;
   }, [cart]);
 

@@ -11,13 +11,12 @@ import { BillingSchema, BillingType } from "@/types";
 import getCart from "@/utils/localStorage/getCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStripe } from "@stripe/react-stripe-js";
-import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 const Billing = () => {
-  const { data: authSession } = useSession();
+  const { data: authSession }: any = useSession();
   const stripe = useStripe();
   const cart = getCart();
   console.log({ cart });
@@ -38,20 +37,18 @@ const Billing = () => {
         return;
       }
 
-      // const session = JSON.parse(await checkoutSession(cart));
+      const session = JSON.parse(await checkoutSession(cart));
       const orderData = {
         contact_info,
         items: {
           products: cart,
         },
-        // payment_id: session.id,
-        payment_id: `${Date.now()}`,
+        payment_id: session.id,
         userId: authSession.user?.id,
       };
-      console.log({ orderData });
 
       await postOrder(orderData);
-      return;
+
       stripe.redirectToCheckout({
         sessionId: session.id,
       });

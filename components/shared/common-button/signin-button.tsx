@@ -1,4 +1,5 @@
 "use client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,44 +8,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { AiOutlineMenu } from "react-icons/ai";
 import Wrapper from "@/components/wapper";
-import { useParams, useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const SignInButton = () => {
-  const currentUser = useSession();
+  const { data }: any = useSession();
   const router = useRouter();
-  console.log({ currentUser });
+  const pathname = usePathname();
+
   return (
     <Wrapper>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar>
-            <AvatarImage src={currentUser?.data?.user?.image} />
+            <AvatarImage src={data?.user?.image} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className=" mt-[10px]">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {currentUser?.data?.user && (
+          {!pathname.startsWith("/dashboard") && data?.user && (
             <Link href="/my-orders">
               <DropdownMenuItem className="text-gray-700 cursor-pointer">
                 My Orders
               </DropdownMenuItem>
             </Link>
           )}
-          {currentUser?.data?.user?.role == "ADMIN" && (
-            <Link href="/dashboard/create-admin">
-              <DropdownMenuItem className="cursor-pointer ">
-                Add Admin
-              </DropdownMenuItem>
-            </Link>
-          )}
-          {!currentUser?.data?.user ? (
+          {pathname.startsWith("/dashboard") &&
+            data?.user?.role === "ADMIN" && (
+              <Link href="/dashboard/create-admin">
+                <DropdownMenuItem className="cursor-pointer ">
+                  Add Admin
+                </DropdownMenuItem>
+              </Link>
+            )}
+          {!data?.user ? (
             <DropdownMenuItem
               className="text-gray-700 cursor-pointer "
               onClick={() => router.push("/auth/signin")}

@@ -33,12 +33,18 @@ export const columns: ColumnDef<order>[] = [
     cell: (info: any) => {
       const { products } = info.getValue() || { products: [] };
       const total = products.reduce((totalValue: number, product: any) => {
+        if (product?.discount) {
+          return (
+            totalValue +
+            (product.price - (product.discount || 0)) * product.quantity
+          );
+        }
         return totalValue + product.price * product.quantity;
       }, 0);
 
       return (
         <div className="flex items-center justify-center">
-          <TbCurrencyTaka size={20} />
+          <TbCurrencyTaka size={16} />
           <span>{total}</span>
         </div>
       );

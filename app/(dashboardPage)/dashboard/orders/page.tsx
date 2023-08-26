@@ -26,7 +26,6 @@ function DashboardHome() {
   }
 
   const exportData: any = data;
-  console.log(exportData);
 
   const exportPDF = () => {
     const unit = "pt";
@@ -53,6 +52,12 @@ function DashboardHome() {
 
         "BDT " +
           item.items.products.reduce((totalValue, product) => {
+            if (product.discount) {
+              return (
+                totalValue +
+                (product.price - (product.discount || 0)) * product.quantity
+              );
+            }
             return totalValue + product.price * product.quantity;
           }, 0),
         item.status,

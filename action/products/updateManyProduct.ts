@@ -1,9 +1,9 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { ProductType } from "@/types";
+import { revalidatePath } from "next/cache";
 
-export const updatedManyProduct = async (values: ProductType[]) => {
+export const updatedManyProduct = async (values: any[]) => {
   try {
     if (values) {
       for (let item of values) {
@@ -12,13 +12,17 @@ export const updatedManyProduct = async (values: ProductType[]) => {
             id: item.id,
           },
           data: {
-            quantity: {
-              decrement: item.quantity,
-            },
+            sizes: item.sizes.map((size) => {
+              return {
+                size: size?.size,
+                quantity: size?.quantity - item?.quantity,
+              };
+            }),
           },
         });
       }
     }
+    revalidatePath("/");
     return true;
   } catch (error) {
     console.log(error);

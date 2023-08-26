@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { setProduct } from "@/store/addCartSlice";
 import { useAppDispatch } from "@/store/store";
 import Link from "next/link";
@@ -14,17 +15,19 @@ function SuccessPage() {
       localStorage.clear();
       dispatch(setProduct(1));
     } else {
-      router.push("/checkout");
+      router.push("/");
     }
   }, [id]);
 
   return (
-    <div className="flex justify-center items-center py-10">
+    <div className="flex justify-center items-center py-10 h-[50vh]">
       <div className="text-center space-y-5">
-        <h2 className="text-green-500">Payment Successful</h2>
+        <h2 className="text-green-500 text-4xl font-semibold">
+          Payment Successful
+        </h2>
         <h3>Your order has been placed successfully</h3>
-        <Link href="/shop" className="pt-10 block">
-          <button className="btn-primary">Shop More</button>
+        <Link href="/" className="pt-10 block">
+          <Button>Shop More</Button>
         </Link>
       </div>
     </div>

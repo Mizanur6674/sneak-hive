@@ -48,9 +48,10 @@ export default function AddProducts() {
 
   const onSubmit = async (data: ProductType) => {
     try {
-      const priceId = await createPrice(data.price);
+      const price = data?.price - (data?.discount || 0);
+      const priceId = await createPrice(price);
       await ProductSchema.parseAsync(data);
-      const newProduct = await addProduct({ ...data, priceId });
+      await addProduct({ ...data, priceId });
 
       toast.success("Product Added");
       reset();
