@@ -1,6 +1,7 @@
 "use client";
 import { order } from "@prisma/client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 const columnHelper = createColumnHelper<order>();
 export const columns: ColumnDef<order>[] = [
@@ -33,7 +34,12 @@ export const columns: ColumnDef<order>[] = [
         return totalValue + product.price * product.quantity;
       }, 0);
 
-      return `$ ${total}`;
+      return (
+        <div className="flex items-center gap-1">
+          <TbCurrencyTaka />
+          <span>{total}</span>
+        </div>
+      );
     },
   }),
 

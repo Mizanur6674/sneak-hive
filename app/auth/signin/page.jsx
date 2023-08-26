@@ -1,19 +1,16 @@
 "use client";
 
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
 import { useState } from "react";
 
-import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
-import Register from "../register/page";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const [form, setFrom] = useState({ email: "", password: "" });
-  async function handleGoogleSignin() {
+  async function handleGoogleSignIn() {
     signIn("google", { callbackUrl: "http://localhost:3000" });
   }
   console.log({ form });
@@ -101,18 +98,7 @@ const Login = () => {
               >
                 <button className="button">Login</button>
               </div> */}
-              <div className="input-button">
-                <button
-                  type="button"
-                  onClick={() => {
-                    signIn("google", { callbackUrl: "/" });
-                  }}
-                  className="button-custom"
-                >
-                  Sign in with Goggle
-                  <Image src="/goggle.png" width={20} height={20} />
-                </button>
-              </div>
+
               {/* <div className="input-button">
                 <button type="button" className="button-custom">
                   Sign in with GitHub
@@ -120,6 +106,18 @@ const Login = () => {
                 </button>
               </div> */}
             </form>
+            <div className="input-button w-full">
+              <button
+                type="button"
+                onClick={() => {
+                  signIn("google", { callbackUrl: "http://localhost:3000" });
+                }}
+                className="button-custom w-full"
+              >
+                Sign in with Goggle
+                <Image src="/goggle.png" width={20} height={20} />
+              </button>
+            </div>
 
             {/* bottom */}
             <p className="text-center text-gray-400">
