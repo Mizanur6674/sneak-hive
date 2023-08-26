@@ -207,52 +207,44 @@ import { AboutAuthorTopDataType, BillingDataType } from "@/types";
 export const billingData: BillingDataType[] = [
   {
     id: 1,
-    title: "Full name",
+    title: "Full Name",
     name: "full_name",
-    control: "input",
   },
   {
     id: 2,
     title: "District",
     name: "district",
-    control: "input",
   },
   {
     id: 3,
-    title: "Town/City",
+    title: "City",
     name: "city",
-    control: "input",
   },
   {
     id: 4,
-    title: "Postal code",
+    title: "Postal Code",
     name: "postal_code",
-    control: "input",
   },
   {
     id: 5,
     title: "Area",
     name: "area",
-    control: "input",
   },
+
   {
     id: 6,
-    title: "Phone number",
+    title: "Phone",
     name: "phone",
-    control: "input",
   },
   {
     id: 7,
-    title: "E-mail address",
+    title: "Email",
     name: "email",
-    control: "input",
   },
   {
     id: 8,
     title: "Alternative phone number",
     name: "alt_phone",
-    control: "input",
-    required: false,
   },
 ];
 

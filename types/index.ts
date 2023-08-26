@@ -46,7 +46,9 @@ export const BillingSchema = z.object({
   postal_code: z.string().nonempty("Required Field"),
   area: z.string().nonempty("Required Field"),
   phone: z.string().nonempty("Required Field"),
+  alt_phone: z.string().nonempty("Required Field"),
   email: z.string().nonempty("Required Field"),
+  description: z.string().nonempty("Required Field"),
 });
 export type BillingType = z.infer<typeof BillingSchema>;
 
@@ -100,8 +102,6 @@ export interface BillingDataType {
   id: number;
   title: string;
   name: string;
-  control: string;
-  required?: boolean;
 }
 export interface SignupData {
   type: string;

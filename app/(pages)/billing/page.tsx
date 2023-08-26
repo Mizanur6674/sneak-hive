@@ -4,7 +4,7 @@ import Wrapper from "@/components/wapper";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-const page = async () => {
+const Page = () => {
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
   );
@@ -19,4 +19,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;
