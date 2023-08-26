@@ -2,9 +2,32 @@
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import Link from "next/link";
 import { useState } from "react";
+import { SignupSchema, SignupType } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { FiLoader } from "react-icons/fi";
 
 const Register = () => {
   const [show, setShow] = useState({ password: false, cpassword: false });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isValid, isSubmitting },
+  } = useForm<SignupType>({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      cpassword: "",
+    },
+    resolver: zodResolver(SignupSchema),
+  });
+  const onSubmit = async (data: SignupType) => {
+    console.log({ data });
+  };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -20,11 +43,14 @@ const Register = () => {
             <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-blue-900 md:text-2xl dark:text-white">
               Sign up to your account
             </h1>
-            <form className="flex flex-col gap-5 items-center">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-5 items-center"
+            >
               <div className="input-group">
-                <input
+                <Input
                   type="text"
-                  name="Username"
+                  {...register("name")}
                   placeholder="Username"
                   className="input-text"
                 />
@@ -33,9 +59,9 @@ const Register = () => {
                 </span>
               </div>
               <div className="input-group">
-                <input
+                <Input
                   type="email"
-                  name="email"
+                  {...register("email")}
                   placeholder="Email"
                   className="input-text"
                 />
@@ -45,9 +71,9 @@ const Register = () => {
               </div>
 
               <div className="input-group">
-                <input
+                <Input
                   type={`${show.password ? "text" : "password"}`}
-                  name="password"
+                  {...register("password")}
                   placeholder="password"
                   className="input-text"
                 />
@@ -62,7 +88,7 @@ const Register = () => {
               <div className="input-group">
                 <input
                   type={`${show.cpassword ? "text" : "password"}`}
-                  name="cpassword"
+                  {...register("cpassword")}
                   placeholder="Confirm Password"
                   className="input-text"
                 />
@@ -78,20 +104,30 @@ const Register = () => {
 
               {/* login */}
               <div className="input-button">
-                <button type="submit" className="button">
-                  <Link href={"/"}>Login</Link>
+                <button
+                  disabled={!isValid || isSubmitting}
+                  type="submit"
+                  className="button cursor-pointer"
+                >
+                  {!isSubmitting ? (
+                    <span>Submit</span>
+                  ) : (
+                    <span className=" flex items-center gap-1">
+                      <span>Submitting...</span>
+                      <FiLoader className=" animate-spin" />
+                    </span>
+                  )}
                 </button>
               </div>
             </form>
 
             {/* bottom */}
-            <p className="text-center text-gray-400">
+            <button className="text-center text-gray-400">
               Have an Account?
               <Link href={"/auth/signin"}>
-                {" "}
                 <span className="text-blue-700">Sign in</span>
               </Link>
-            </p>
+            </button>
           </div>
         </div>
       </div>

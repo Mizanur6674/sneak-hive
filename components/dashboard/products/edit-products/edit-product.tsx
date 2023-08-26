@@ -109,7 +109,7 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
             <p className=" text-red-500"> {errors.price?.message} </p>
           </div>
           <div className=" w-full">
-            <Label htmlFor="quantity">Discount</Label>
+            <Label htmlFor="discount">Discount</Label>
             <Input
               {...register("discount", {
                 valueAsNumber: true,
@@ -125,7 +125,7 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
         {/* for description */}
         <div className=" flex-1">
           <div className=" w-full">
-            <Label htmlFor="description">Select Category</Label>
+            <Label htmlFor="categoryId">Select Category</Label>
             <Select
               defaultValue={product.categoryId + ""}
               onValueChange={(value) => {

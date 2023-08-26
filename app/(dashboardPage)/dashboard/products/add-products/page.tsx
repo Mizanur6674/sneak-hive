@@ -94,7 +94,7 @@ export default function AddProducts() {
           </div>
           {/* for quantity */}
           <div className=" w-full">
-            <Label htmlFor="quantity">Select Size</Label>
+            <Label htmlFor="sizes">Select Size</Label>
             <SelectedMultipleSize setValue={setValue} />
             <p className=" text-red-500"> {errors.sizes?.message} </p>
           </div>
@@ -115,7 +115,7 @@ export default function AddProducts() {
           </div>
           {/* for discount */}
           <div className=" w-full">
-            <Label htmlFor="quantity">Discount</Label>
+            <Label htmlFor="discount">Discount</Label>
             <Input
               {...register("discount", {
                 valueAsNumber: true,
@@ -130,7 +130,7 @@ export default function AddProducts() {
 
         <div className=" flex gap-5 ">
           <div className=" w-1/2">
-            <Label htmlFor="description">Select Category</Label>
+            <Label htmlFor="categoryId">Select Category</Label>
             <Select
               onValueChange={(value) => {
                 setValue("categoryId", Number(value));

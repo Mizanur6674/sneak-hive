@@ -50,6 +50,29 @@ export const BillingSchema = z.object({
 });
 export type BillingType = z.infer<typeof BillingSchema>;
 
+export const SignupSchema = z
+  .object({
+    name: z.string().nonempty("Required Field"),
+    email: z.string().email().nonempty("Required Field"),
+    password: z.string().nonempty("Required Field"),
+    cpassword: z.string().nonempty("Required Field"),
+  })
+  .refine((data) => data.password === data.cpassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // path of error
+  });
+
+export type SignupType = z.infer<typeof SignupSchema>;
+
+export const SigninSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email("this is not a valid email")
+    .refine((e) => e === "abcd@fg.com", "This email is not in our database"),
+  password: z.string().nonempty("Required Field"),
+});
+export type SigninType = z.infer<typeof SigninSchema>;
 export interface NavListDataType {
   id: number;
   title: string;

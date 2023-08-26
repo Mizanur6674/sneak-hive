@@ -52,6 +52,9 @@ const Header = () => {
   }, [lastScrollY]);
 
   const router = useRouter();
+
+  console.log({ session });
+
   return (
     <header
       className={`px-10 w-full h-[50px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 ${show}`}

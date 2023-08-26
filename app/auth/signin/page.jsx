@@ -13,10 +13,10 @@ import { signIn, useSession } from "next-auth/react";
 const Login = () => {
   const [show, setShow] = useState(false);
   const [form, setFrom] = useState({ email: "", password: "" });
-  // async function handleGoogleSignin() {
-  //   signIn("google", { callbackUrl: "http://localhost:3000" });
-  // }
-  // console.log({ form });
+  async function handleGoogleSignin() {
+    signIn("google", { callbackUrl: "http://localhost:3000" });
+  }
+  console.log({ form });
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">

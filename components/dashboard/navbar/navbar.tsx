@@ -7,7 +7,11 @@ import { BsFillBellFill, BsMoonFill, BsSunFill } from "react-icons/bs";
 
 const Navbar = () => {
   const currentUser = useSession();
+  console.log(currentUser);
+
   const { setTheme, theme } = useTheme();
+
+  return null;
   return (
     <div className=" px-4 bg-theme-primary h-20 w-full flex items-center justify-between">
       <div className=" flex items-center gap-x-2">

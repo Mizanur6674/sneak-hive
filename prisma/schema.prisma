@@ -8,56 +8,36 @@ datasource db {
 }
 
 model user {
-  id        Int       @id @default(autoincrement())
-  name      String?   @db.VarChar(255)
-  image     String?   @db.VarChar(255)
-  decs      String?   @db.VarChar(1000)
-  email     String    @unique @db.VarChar(255)
-  role      role      @default(ADMIN)
-  password  String    @db.VarChar(255)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  order     order[]
-  accounts  Account[]
-  sessions  Session[]
-
-  @@map("user")
+  id             Int       @id @default(autoincrement())
+  name           String?   @db.VarChar(255)
+  image          String?   @db.VarChar(255)
+  email          String    @unique @db.VarChar(255)
+  emailVerified  DateTime?
+  role           role      @default(USER)
+  password       String    @db.VarChar(255)
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now())
+  order          order[]
+  accounts       Account[]
 }
 
 model Account {
-  id                String  @unique @default(uuid())
+  id                Int     @id @default(autoincrement())
+  userId            Int
   type              String
   provider          String
   providerAccountId String
-  token_type        String?
   refresh_token     String?
   access_token      String?
-  id_token          String?
-  scope             String?
-  session_state     String?
   expires_at        Int?
-
-  user   user @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              user    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@map("account")
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       Int
-  expires      DateTime
-  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
 }
 
 model order {
