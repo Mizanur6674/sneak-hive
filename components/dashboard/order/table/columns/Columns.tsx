@@ -22,9 +22,11 @@ export const columns: ColumnDef<order>[] = [
     header: "Items",
     cell: (info: any) => {
       const { products } = info.getValue() || { products: [] };
-      return products.map((item: any, id: number) => {
-        return item.name + "(" + item.quantity + ")" + "," + "  ";
-      });
+      return products
+        .map((item: any) => {
+          return item.name + "(" + item.quantity + ")";
+        })
+        .join(" , ");
     },
   }),
   columnHelper.accessor("items", {
@@ -32,12 +34,18 @@ export const columns: ColumnDef<order>[] = [
     cell: (info: any) => {
       const { products } = info.getValue() || { products: [] };
       const total = products.reduce((totalValue: number, product: any) => {
+        if (product?.discount) {
+          return (
+            totalValue +
+            (product.price - (product.discount || 0)) * product.quantity
+          );
+        }
         return totalValue + product.price * product.quantity;
       }, 0);
 
       return (
-        <div className="flex items-center gap-1">
-          <TbCurrencyTaka />
+        <div className="flex items-center justify-center">
+          <TbCurrencyTaka size={16} />
           <span>{total}</span>
         </div>
       );

@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { useAppSelector } from "@/store/store";
 import getCart from "@/utils/localStorage/getCart";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { BiMenuAltRight } from "react-icons/bi";
 import { BsCart } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
@@ -25,8 +24,6 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [categories, setCategories] = useState(null);
   const session = useSession();
-
-  console.log({ session });
 
   const [cart, setCart] = React.useState(0);
   useEffect(() => {

@@ -1,16 +1,11 @@
 "use client";
 import SignInButton from "@/components/shared/common-button/signin-button";
-import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import { BsFillBellFill, BsMoonFill, BsSunFill } from "react-icons/bs";
+import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
 const Navbar = () => {
-  const currentUser = useSession();
-
   const { setTheme, theme } = useTheme();
-
-  console.log({ currentUser });
 
   return (
     <div className="flex items-center justify-between w-full h-20 px-4  bg-theme-primary">

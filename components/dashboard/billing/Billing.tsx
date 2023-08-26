@@ -11,7 +11,6 @@ import { BillingSchema, BillingType } from "@/types";
 import getCart from "@/utils/localStorage/getCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStripe } from "@stripe/react-stripe-js";
-import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -47,10 +46,9 @@ const Billing = () => {
         payment_id: session.id,
         userId: authSession.user?.id,
       };
-      console.log({ orderData });
 
       await postOrder(orderData);
-      return;
+
       stripe.redirectToCheckout({
         sessionId: session.id,
       });

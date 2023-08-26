@@ -11,17 +11,6 @@ import removeFromCart from "@/utils/localStorage/removeCartItem";
 const CartItem = ({ data, setQuantity }) => {
   const dispatch = useAppDispatch();
 
-  console.log("data", data);
-
-  // const updateCartItem = (e, key) => {
-  //   let payload = {
-  //     key,
-  //     val: key === "quantity" ? parseInt(e.target.value) : e.target.value,
-  //     id: data.id,
-  //   };
-  //   dispatch(updateCart(payload));
-  // };
-
   return (
     <div className="flex py-5 gap-3 md:gap-5 border-b">
       {/* IMAGE START */}
@@ -45,8 +34,18 @@ const CartItem = ({ data, setQuantity }) => {
             {data?.subtitle}
           </div>
           {/* PEODUCT PRICE */}
-          <div className="text-sm md:text-md font-bold text-black/[0.5] mt-2">
-            MRP : &#2547;{data?.price}
+          <div className="text-sm md:text-md font-bold text-black/[0.5] mt-2 w-max flex">
+            MRP :{" "}
+            {data?.discount ? (
+              <div className="space-x-1">
+                <span>&#2547;{data?.price - data?.discount}</span>
+                <span className="line-through text-red-400">
+                  &#2547;{data?.price}
+                </span>
+              </div>
+            ) : (
+              <span>&#2547;{data?.price}</span>
+            )}
           </div>
         </div>
         {/* PRODUCT SUBTITLE */}

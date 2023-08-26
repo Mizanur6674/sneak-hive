@@ -1,29 +1,28 @@
 "use client";
-import Card from "@/components/dashboard/card/Card";
+
 import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
 import { columns } from "@/components/dashboard/order/table/columns/Columns";
-import prisma from "@/lib/prisma";
+import Wrapper from "@/components/wapper";
 import { fetches } from "@/lib/refetch";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { getMyOrders } from "./getMyOrders";
 
 function DashboardHome() {
-  const currentUser = useSession();
+  const { data }: any = useSession();
   const {
     data: orders,
     refetch,
     isLoading,
   } = useQuery({
     queryKey: ["get-all-orders"],
-    enabled: Boolean(currentUser?.data?.user?.id),
-    queryFn: () => getMyOrders(currentUser?.data?.user?.id),
+    enabled: Boolean(data?.user?.id),
+    queryFn: () => getMyOrders(data?.user?.id),
   });
 
   fetches.refetchOrders = refetch;
-  console.log({ orders });
 
-  if (isLoading || !orders || !currentUser?.data) {
+  if (isLoading || !orders || !data) {
     return (
       <div className="flex items-center justify-center w-full py-40 ">
         <p>data is loading...</p>
@@ -31,11 +30,12 @@ function DashboardHome() {
     );
   }
   return (
-    <div className="container w-full pb-40">
-      <div className="w-full mt-10 ">
-        <ReactBasicTable columns={columns} data={orders} name="My Orders" />
+    <Wrapper className=" pb-40 space-y-3">
+      <h5>My Orders</h5>
+      <div className="w-full">
+        <ReactBasicTable columns={columns} data={orders} />
       </div>
-    </div>
+    </Wrapper>
   );
 }
 

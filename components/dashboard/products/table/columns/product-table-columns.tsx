@@ -2,6 +2,7 @@
 import { product } from "@prisma/client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import Image from "next/image";
+import { TbCurrencyTaka } from "react-icons/tb";
 import ProductActiveCell from "./product-active-cell";
 // import ProductActiveCell from "./product-active-cell";
 
@@ -37,7 +38,12 @@ export const productColumns: ColumnDef<product>[] = [
     cell: (info) => {
       console.log("price", info.getValue());
       const price = info.getValue();
-      return <span>${price}</span>;
+      return (
+        <span className="flex items-center justify-center">
+          <TbCurrencyTaka size={16} />
+          {price}
+        </span>
+      );
     },
   }),
 

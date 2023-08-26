@@ -1,14 +1,16 @@
 "use client";
 import { deleteOrderByPaymentId } from "@/action/order/deleteOrder";
 import Link from "next/link";
-import { redirect, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 function CancelPage() {
   const id = useSearchParams().get("id");
+  const router = useRouter();
   useEffect(() => {
     if (!id || !id.startsWith("cs_")) {
-      return redirect("/checkout");
+      router.push("/");
     }
     if (id) {
       (async () => {

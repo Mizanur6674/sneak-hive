@@ -31,11 +31,14 @@ const Card = () => {
   const totalPrice = orders?.reduce(
     (totalAmount: number, order) =>
       totalAmount +
-      order?.items?.products?.reduce(
-        (totalValue: number, item: any) =>
-          totalValue + item.price * item.quantity,
-        0
-      ),
+      order?.items?.products?.reduce((totalValue: number, item: any) => {
+        if (item?.discount) {
+          return (
+            totalValue + (item?.price - (item?.discount || 0)) * item?.quantity
+          );
+        }
+        return totalValue + item.price * item.quantity;
+      }, 0),
     0
   );
 
