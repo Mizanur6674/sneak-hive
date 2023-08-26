@@ -1,6 +1,7 @@
 "use client";
 import { getOrders } from "@/action/order/getOrders";
 import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
+import ActiveCell from "@/components/dashboard/order/table/columns/ActiveCell";
 import { columns } from "@/components/dashboard/order/table/columns/Columns";
 import { Button } from "@/components/ui/button";
 import { fetches } from "@/lib/refetch";
@@ -66,9 +67,17 @@ function DashboardHome() {
     });
     doc.save("report.pdf");
   };
+  columns[5] = {
+    id: "active",
+    header: "Action",
+    cell: (e) => {
+      const data = e.row.original;
+      return <ActiveCell data={data} />;
+    },
+  };
   return (
     <div className="w-full space-y-3 ">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <h5>Orders Table</h5>
         <Button
           className="flex items-center gap-2 dark:bg-orange-500 dark:text-white dark:hover:bg-orange-600 "

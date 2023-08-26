@@ -55,13 +55,4 @@ export const columns: ColumnDef<order>[] = [
   columnHelper.accessor("status", {
     header: "Status",
   }),
-
-  {
-    id: "active",
-    header: "Active",
-    cell: (e) => {
-      const data = e.row.original;
-      return <ActiveCell data={data} />;
-    },
-  },
 ];

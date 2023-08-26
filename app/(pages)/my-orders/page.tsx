@@ -7,9 +7,12 @@ import { fetches } from "@/lib/refetch";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { getMyOrders } from "./getMyOrders";
+import ActiveCell from "@/components/dashboard/order/table/columns/ActiveCell";
+import { useEffect } from "react";
 
 function DashboardHome() {
   const { data }: any = useSession();
+
   const {
     data: orders,
     refetch,
@@ -29,8 +32,9 @@ function DashboardHome() {
       </div>
     );
   }
+
   return (
-    <Wrapper className=" pb-40 space-y-3">
+    <Wrapper className="pb-40 space-y-3 ">
       <h5>My Orders</h5>
       <div className="w-full">
         <ReactBasicTable columns={columns} data={orders} />

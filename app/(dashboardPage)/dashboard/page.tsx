@@ -2,6 +2,7 @@
 import { getOrders } from "@/action/order/getOrders";
 import Card from "@/components/dashboard/card/Card";
 import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
+import ActiveCell from "@/components/dashboard/order/table/columns/ActiveCell";
 import { columns } from "@/components/dashboard/order/table/columns/Columns";
 import { fetches } from "@/lib/refetch";
 import { useQuery } from "@tanstack/react-query";
@@ -15,15 +16,23 @@ function DashboardHome() {
 
   if (isLoading || !data) {
     return (
-      <div className=" w-full flex items-center justify-center">
+      <div className="flex items-center justify-center w-full ">
         <p>data is loading...</p>
       </div>
     );
   }
+  columns[5] = {
+    id: "active",
+    header: "Action",
+    cell: (e) => {
+      const data = e.row.original;
+      return <ActiveCell data={data} />;
+    },
+  };
   return (
-    <div className=" w-full">
+    <div className="w-full ">
       <Card />
-      <div className=" mt-10 w-full">
+      <div className="w-full mt-10 ">
         <ReactBasicTable columns={columns} data={data} />
       </div>
     </div>
