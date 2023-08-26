@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 const Billing = () => {
-  const { data: session } = useSession();
+  const { data: authSession } = useSession();
   const stripe = useStripe();
   const cart = getCart();
   console.log({ cart });
@@ -38,22 +38,25 @@ const Billing = () => {
         return;
       }
 
-      const session = JSON.parse(await checkoutSession(cart));
+      // const session = JSON.parse(await checkoutSession(cart));
       const orderData = {
         contact_info,
         items: {
           products: cart,
         },
-        payment_id: session.id,
-        userId: session.user?.id,
+        // payment_id: session.id,
+        payment_id: `${Date.now()}`,
+        userId: authSession.user?.id,
       };
       console.log({ orderData });
+
       await postOrder(orderData);
+      return;
       stripe.redirectToCheckout({
         sessionId: session.id,
       });
     } catch (error) {
-      toast.error("Not Create an Order!");
+      toast.error("Order could not created!");
     }
   };
 
@@ -62,12 +65,12 @@ const Billing = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="bg-[#FAFAFA] py-10 lg:py-16 px-1 sm:px-6 md:px-16"
     >
-      <h5 className=" text-3xl border-b border-theme-light-gray">
+      <h5 className="text-3xl border-b border-theme-light-gray">
         Billing Details
       </h5>
 
-      <div className=" my-16 lg:my-20">
-        <div className=" grid md:grid-cols-2 gap-x-20 lg:gap-x-28 gap-y-10 md:gap-y-20">
+      <div className="my-16 lg:my-20">
+        <div className="grid md:grid-cols-2 gap-x-20 lg:gap-x-28 gap-y-10 md:gap-y-20">
           {billingData.map((item: any, index: number) => {
             return (
               <div key={index}>
@@ -77,7 +80,7 @@ const Billing = () => {
                   type="text"
                   {...register(item.name as any)}
                   placeholder="Enter your product name"
-                  className="mt-1  "
+                  className="mt-1 "
                 />
               </div>
             );
@@ -85,12 +88,12 @@ const Billing = () => {
         </div>
       </div>
 
-      <div className=" my-12">
+      <div className="my-12 ">
         <Label htmlFor="description">Description</Label>
         <Textarea
           {...register("description")}
           placeholder="Enter your description"
-          className="mt-1  "
+          className="mt-1 "
         />
       </div>
 

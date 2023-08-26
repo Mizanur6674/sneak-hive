@@ -35,6 +35,9 @@ function DashboardHome() {
     const doc = new jsPDF(orientation, unit, size);
 
     doc.setFontSize(15);
+    doc.text("Order Report", doc.internal.pageSize.getWidth() / 2, 30, {
+      align: "center",
+    });
 
     autoTable(doc, {
       head: [["Order ID", "Email", "Items", "Total Price", "Status"]],
@@ -54,6 +57,7 @@ function DashboardHome() {
           }, 0),
         item.status,
       ]),
+      margin: { top: 50 },
     });
     doc.save("report.pdf");
   };

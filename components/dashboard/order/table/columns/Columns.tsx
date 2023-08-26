@@ -37,8 +37,8 @@ export const columns: ColumnDef<order>[] = [
       }, 0);
 
       return (
-        <div className="flex items-center gap-1">
-          <TbCurrencyTaka />
+        <div className="flex items-center justify-center">
+          <TbCurrencyTaka size={20} />
           <span>{total}</span>
         </div>
       );
