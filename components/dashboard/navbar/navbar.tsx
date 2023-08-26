@@ -11,7 +11,6 @@ const Navbar = () => {
 
   const { setTheme, theme } = useTheme();
 
-  return null;
   return (
     <div className=" px-4 bg-theme-primary h-20 w-full flex items-center justify-between">
       <div className=" flex items-center gap-x-2">
@@ -27,17 +26,16 @@ const Navbar = () => {
         {theme === "dark" ? (
           <BsSunFill
             onClick={() => setTheme("light")}
-            size={24}
+            size={32}
             className=" text-white cursor-pointer"
           />
         ) : (
           <BsMoonFill
             onClick={() => setTheme("dark")}
-            size={24}
+            size={32}
             className=" text-white cursor-pointer"
           />
         )}
-        <BsFillBellFill size={24} className=" text-white cursor-pointer" />
         <SignInButton />
       </div>
     </div>

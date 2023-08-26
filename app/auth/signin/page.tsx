@@ -97,24 +97,24 @@ const Signin = () => {
                 </button>
               </div>
               {/* for google */}
+              <div className="input-button">
+                <button
+                  type="button"
+                  onClick={() => {
+                    signIn("google", { callbackUrl: "/dashboard" });
+                  }}
+                  className="button-custom"
+                >
+                  Sign in with Goggle
+                  <Image
+                    src="/goggle.png"
+                    width={20}
+                    height={20}
+                    alt="google icon"
+                  />
+                </button>
+              </div>
             </form>
-            <div className="input-button">
-              <button
-                type="button"
-                onClick={() => {
-                  signIn("google", { callbackUrl: "/" });
-                }}
-                className="button-custom"
-              >
-                Sign in with Goggle
-                <Image
-                  src="/goggle.png"
-                  width={20}
-                  height={20}
-                  alt="google icon"
-                />
-              </button>
-            </div>
             {/* bottom */}
             <button className="text-center text-gray-400">
               Don't have an Account?

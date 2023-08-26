@@ -12,6 +12,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { VscChromeClose } from "react-icons/vsc";
 import Menu from "./Menu";
 import MenuMobile from "./MobilMenu";
+import SignInButton from "./shared/common-button/signin-button";
 
 const Header = () => {
   const {
@@ -105,23 +106,7 @@ const Header = () => {
 
           {/* Icon End */}
           {/* Mobile icon start */}
-          {session?.data ? (
-            <button
-              onClick={() => signOut()}
-              className="border-red-600 bg-red-400 rounded px-6 py-3 hover:bg-slate-400 font-bold "
-            >
-              Log Out
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                router.push("/auth/signin");
-              }}
-              className="border-red-600 bg-red-400 rounded px-6 py-3 hover:bg-slate-400 font-bold"
-            >
-              Login
-            </button>
-          )}
+          <SignInButton />
           <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
             {mobileMenu ? (
               <VscChromeClose
