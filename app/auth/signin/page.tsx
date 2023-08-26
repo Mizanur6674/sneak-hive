@@ -27,11 +27,10 @@ const Signin = () => {
   });
   const onSubmit = async (data: SigninType) => {
     try {
-      const res = await signIn("credentials", {
+      await signIn("credentials", {
         ...data,
         callbackUrl: "/",
       });
-      console.log({ res });
     } catch (error) {
       console.log(error);
     }

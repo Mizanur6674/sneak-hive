@@ -53,7 +53,7 @@ function WishListPage() {
                       </p>
                     </div>
                     <div className="flex justify-center items-center">
-                      {item.quantity > 0 ? (
+                      {item?.quantity > 0 ? (
                         <span className="inline-block px-3 py-1 border border-green-500 text-green-500 rounded">
                           In Stock
                         </span>

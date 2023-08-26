@@ -4,6 +4,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 type Props = Omit<ProductType, "categoryId"> & {
   selectedSize: string;
   totalPrice: number;
+  quantity: number;
 };
 interface InitialStateProps {
   wishList: Props[];
