@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { getMyOrders } from "./getMyOrders";
 import ActiveCell from "@/components/dashboard/order/table/columns/ActiveCell";
 import { useEffect } from "react";
+import ProductDetailsModal from "@/components/dashboard/order/modal/productDetails";
 
 function DashboardHome() {
   const { data }: any = useSession();
@@ -32,6 +33,14 @@ function DashboardHome() {
       </div>
     );
   }
+  columns[5] = {
+    id: "active",
+    header: "Active",
+    cell: (e) => {
+      const data = e.row.original;
+      return <ProductDetailsModal data={data} />;
+    },
+  };
 
   return (
     <Wrapper className="pb-40 space-y-3 ">

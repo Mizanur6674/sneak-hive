@@ -8,9 +8,9 @@ import { BsChevronDown } from "react-icons/bs";
 
 const menuData = [
   { id: 1, name: "Home", url: "/" },
-  { id: 2, name: "About", url: "/about" },
   { id: 3, name: "Categories", subMenu: true },
-  { id: 4, name: "Contact", url: "/contact" },
+  { id: 2, name: "About", url: "/about" },
+  // { id: 4, name: "Contact", url: "/contact" },
 ];
 
 const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
@@ -20,13 +20,13 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
   });
 
   return (
-    <ul className="hidden md:flex items-center gap-8 font-medium text-black">
+    <ul className="items-center hidden gap-8 font-medium text-black md:flex">
       {menuData.map((item) => {
         return (
           <React.Fragment key={item.id}>
             {!!item?.subMenu ? (
               <li
-                className="cursor-pointer flex items-center gap-2 relative"
+                className="relative flex items-center gap-2 cursor-pointer"
                 onMouseEnter={() => setShowCatMenu(true)}
                 onMouseLeave={() => setShowCatMenu(false)}
               >
@@ -44,7 +44,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
                         >
                           <li className="h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md">
                             {item.name}
-                            <span className="opacity-50 text-sm">
+                            <span className="text-sm opacity-50">
                               {`(${item?.products?.length})`}
                             </span>
                           </li>

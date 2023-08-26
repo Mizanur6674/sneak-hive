@@ -29,10 +29,13 @@ function DashboardHome() {
       return <ActiveCell data={data} />;
     },
   };
+  console.log(data);
+
   return (
     <div className="w-full ">
       <Card />
       <div className="w-full mt-10 ">
+        <h2 className="pb-4 text-xl">Recent Orders</h2>
         <ReactBasicTable columns={columns} data={data} />
       </div>
     </div>
