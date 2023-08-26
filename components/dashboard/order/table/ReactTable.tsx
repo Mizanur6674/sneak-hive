@@ -40,7 +40,6 @@ const ReactBasicTable: React.FC<DataTableProps> = ({ columns, data }) => {
 
   return (
     <div className="relative space-y-4">
-      <h5>Orders Table</h5>
       <Table className=" w-full border-2 border-theme-light-gray">
         <TableHeader className=" border-2 border-theme-light-gray ">
           {table.getHeaderGroups().map((headerGroup) => (

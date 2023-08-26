@@ -21,9 +21,11 @@ export const columns: ColumnDef<order>[] = [
     header: "Items",
     cell: (info: any) => {
       const { products } = info.getValue() || { products: [] };
-      return products.map((item: any, id: number) => {
-        return item.name + "(" + item.quantity + ")" + "," + "  ";
-      });
+      return products
+        .map((item: any) => {
+          return item.name + "(" + item.quantity + ")";
+        })
+        .join(" , ");
     },
   }),
   columnHelper.accessor("items", {
