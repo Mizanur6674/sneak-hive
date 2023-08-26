@@ -2,7 +2,7 @@
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import Link from "next/link";
 import { useState } from "react";
-import { SignupSchema, SignupType } from "@/types";
+import { SigninType, SignupSchema, SignupType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -10,23 +10,26 @@ import { FiLoader } from "react-icons/fi";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 
-const Register = () => {
+const Signin = () => {
   const [show, setShow] = useState({ password: false, cpassword: false });
+
+  async function handleGoogleSignin() {
+    signIn("google", { callbackUrl: "http://localhost:3000" });
+  }
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { isValid, isSubmitting },
-  } = useForm<SignupType>({
+  } = useForm<SigninType>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      cpassword: "",
     },
     resolver: zodResolver(SignupSchema),
   });
-  const onSubmit = async (data: SignupType) => {
+  const onSubmit = async (data: SigninType) => {
     console.log({ data });
   };
 
@@ -43,23 +46,12 @@ const Register = () => {
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-blue-900 md:text-2xl dark:text-white">
-              Sign up to your account
+              Sign in to your account
             </h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-5 items-center"
             >
-              <div className="input-group">
-                <Input
-                  type="text"
-                  {...register("name")}
-                  placeholder="Username"
-                  className="input-text"
-                />
-                <span className="icon flex items-center px-4">
-                  <HiOutlineUser size={25} />
-                </span>
-              </div>
               <div className="input-group">
                 <Input
                   type="email"
@@ -87,23 +79,6 @@ const Register = () => {
                 </span>
               </div>
 
-              <div className="input-group">
-                <input
-                  type={`${show.cpassword ? "text" : "password"}`}
-                  {...register("cpassword")}
-                  placeholder="Confirm Password"
-                  className="input-text"
-                />
-                <span
-                  className="icon flex items-center px-4"
-                  onClick={() =>
-                    setShow({ ...show, password: !show.cpassword })
-                  }
-                >
-                  <HiFingerPrint size={25} />
-                </span>
-              </div>
-
               {/* login */}
               <div className="input-button">
                 <button
@@ -112,17 +87,17 @@ const Register = () => {
                   className="button cursor-pointer"
                 >
                   {!isSubmitting ? (
-                    <span>Submit</span>
+                    <span>Signin</span>
                   ) : (
                     <span className=" flex items-center gap-1">
-                      <span>Submitting...</span>
+                      <span>Signing...</span>
                       <FiLoader className=" animate-spin" />
                     </span>
                   )}
                 </button>
               </div>
+              {/* for google */}
             </form>
-            {/* for google */}
             <div className="input-button">
               <button
                 type="button"
@@ -142,9 +117,9 @@ const Register = () => {
             </div>
             {/* bottom */}
             <button className="text-center text-gray-400">
-              Have an Account?
+              Don't have an Account?
               <Link href={"/auth/signin"}>
-                <span className="text-blue-700">Sign in</span>
+                <span className="text-blue-700">Register</span>
               </Link>
             </button>
           </div>
@@ -154,4 +129,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signin;

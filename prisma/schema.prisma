@@ -8,18 +8,17 @@ datasource db {
 }
 
 model user {
-  id             Int       @id @default(autoincrement())
-  name           String?   @db.VarChar(255)
-  image          String?   @db.VarChar(255)
-  email          String    @unique @db.VarChar(255)
-  emailVerified  DateTime?
-  role           role      @default(USER)
-  password       String    @db.VarChar(255)
-  hashedPassword String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @default(now())
-  order          order[]
-  accounts       Account[]
+  id            Int       @id @default(autoincrement())
+  name          String?   @db.VarChar(255)
+  image         String?   @db.VarChar(255)
+  email         String    @unique @db.VarChar(255)
+  role          role      @default(USER)
+  password      String    @db.VarChar(255)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
+  emailVerified DateTime?
+  accounts      Account[]
+  order         order[]
 }
 
 model Account {
@@ -64,11 +63,11 @@ model product {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now())
   deletedAt   DateTime?
-  categoryId  Int?
   variants    Json?
   priceId     String?
-  sizes       Json[]
   discount    Int?
+  categoryId  Int?
+  sizes       Json[]
   category    category? @relation(fields: [categoryId], references: [id])
 }
 
