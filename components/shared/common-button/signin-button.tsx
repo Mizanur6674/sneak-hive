@@ -30,6 +30,13 @@ const SignInButton = () => {
         <DropdownMenuContent className=" mt-[10px]">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          {currentUser?.data?.user && (
+            <Link href="/my-orders">
+              <DropdownMenuItem className="text-gray-700 cursor-pointer">
+                My Orders
+              </DropdownMenuItem>
+            </Link>
+          )}
           {currentUser?.data?.user?.role == "ADMIN" && (
             <Link href="/dashboard/create-admin">
               <DropdownMenuItem className="cursor-pointer ">

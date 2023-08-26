@@ -23,8 +23,13 @@ import {
 interface DataTableProps<TData = any, TValue = any> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  name?: string;
 }
-const ReactBasicTable: React.FC<DataTableProps> = ({ columns, data }) => {
+const ReactBasicTable: React.FC<DataTableProps> = ({
+  columns,
+  data,
+  name = "Order Table",
+}) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
@@ -40,13 +45,13 @@ const ReactBasicTable: React.FC<DataTableProps> = ({ columns, data }) => {
 
   return (
     <div className="relative space-y-4">
-      <h5>Orders Table</h5>
-      <Table className=" w-full border-2 border-theme-light-gray">
-        <TableHeader className=" border-2 border-theme-light-gray ">
+      <h5>{name}</h5>
+      <Table className="w-full border-2 border-theme-light-gray">
+        <TableHeader className="border-2 border-theme-light-gray">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead className=" text-center" key={header.id}>
+                <TableHead className="text-center " key={header.id}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -60,9 +65,9 @@ const ReactBasicTable: React.FC<DataTableProps> = ({ columns, data }) => {
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id} className=" border border-theme-light-gray">
+            <TableRow key={row.id} className="border border-theme-light-gray">
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className=" text-center py-3 ">
+                <TableCell key={cell.id} className="py-3 text-center ">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
