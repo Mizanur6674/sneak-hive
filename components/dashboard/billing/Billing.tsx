@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 const Billing = () => {
-  const { data: authSession } = useSession();
+  const { data: authSession }: any = useSession();
   const stripe = useStripe();
   const cart = getCart();
   console.log({ cart });
@@ -38,14 +38,13 @@ const Billing = () => {
         return;
       }
 
-      // const session = JSON.parse(await checkoutSession(cart));
+      const session = JSON.parse(await checkoutSession(cart));
       const orderData = {
         contact_info,
         items: {
           products: cart,
         },
-        // payment_id: session.id,
-        payment_id: `${Date.now()}`,
+        payment_id: session.id,
         userId: authSession.user?.id,
       };
       console.log({ orderData });

@@ -35,7 +35,7 @@ export const createPrice = async (amount: number) => {
     const price = await stripe.prices.create({
       unit_amount: amount * 100,
       currency: "bdt",
-      product: "prod_OW2svbjyOr0kTe",
+      product: "prod_OWROJeY98QhHRJ",
     });
     return price.id;
   } catch (error) {
