@@ -26,6 +26,8 @@ const Header = () => {
   const [categories, setCategories] = useState(null);
   const session = useSession();
 
+  console.log({ session });
+
   const [cart, setCart] = React.useState(0);
   useEffect(() => {
     setCart(getCart().length);
@@ -51,10 +53,6 @@ const Header = () => {
       window.addEventListener("scroll", controlNavbar);
     };
   }, [lastScrollY]);
-
-  const router = useRouter();
-
-  console.log({ session });
 
   return (
     <header

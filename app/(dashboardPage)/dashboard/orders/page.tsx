@@ -1,0 +1,32 @@
+"use client";
+import { getOrders } from "@/action/order/getOrders";
+import Card from "@/components/dashboard/card/Card";
+import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
+import { columns } from "@/components/dashboard/order/table/columns/Columns";
+import { fetches } from "@/lib/refetch";
+import { useQuery } from "@tanstack/react-query";
+function DashboardHome() {
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["get-all-orders"],
+    queryFn: getOrders,
+  });
+
+  fetches.refetchOrders = refetch;
+
+  if (isLoading || !data) {
+    return (
+      <div className="flex items-center justify-center w-full ">
+        <p>data is loading...</p>
+      </div>
+    );
+  }
+  return (
+    <div className="w-full ">
+      <div className="w-full mt-10 ">
+        <ReactBasicTable columns={columns} data={data} />
+      </div>
+    </div>
+  );
+}
+
+export default DashboardHome;
