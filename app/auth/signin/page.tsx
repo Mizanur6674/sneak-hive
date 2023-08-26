@@ -1,50 +1,40 @@
 "use client";
-import postRegisterData from "@/action/user/PostRegisterData";
 import { Input } from "@/components/ui/input";
-import { SignupSchema, SignupType } from "@/types";
+import { SigninSchema, SigninType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { FiLoader } from "react-icons/fi";
-import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
+import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 
-const Register = () => {
+const Signin = () => {
   const [show, setShow] = useState({ password: false, cpassword: false });
-  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { isValid, isSubmitting, errors },
-  } = useForm<SignupType>({
+  } = useForm<SigninType>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      cpassword: "",
     },
-    resolver: zodResolver(SignupSchema),
+    resolver: zodResolver(SigninSchema),
   });
-  const onSubmit = async (data: SignupType) => {
+  const onSubmit = async (data: SigninType) => {
     try {
-      const { cpassword, ...rest } = data;
-      const newUser = await postRegisterData({ ...rest });
-      if (newUser) {
-        reset();
-        toast.success("User Created");
-        router.push("/auth/signin");
-      }
+      await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
     } catch (error) {
       console.log(error);
     }
   };
-
-  console.log(errors);
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -59,26 +49,12 @@ const Register = () => {
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-blue-900 md:text-2xl dark:text-white">
-              Sign up to your account
+              Sign in to your account
             </h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-5 items-center"
             >
-              <div>
-                <div className="input-group">
-                  <Input
-                    type="text"
-                    {...register("name")}
-                    placeholder="Username"
-                    className="input-text"
-                  />
-                  <span className="icon flex items-center px-4">
-                    <HiOutlineUser size={25} />
-                  </span>
-                </div>
-                <p className=" text-red-500"> {errors.name?.message} </p>
-              </div>
               <div>
                 <div className="input-group">
                   <Input
@@ -91,7 +67,7 @@ const Register = () => {
                     <HiAtSymbol size={25} />
                   </span>
                 </div>
-                <p className=" text-red-500"> {errors.name?.message} </p>
+                <p className=" text-red-500"> {errors.email?.message} </p>
               </div>
 
               <div>
@@ -111,27 +87,7 @@ const Register = () => {
                     <HiFingerPrint size={25} />
                   </span>
                 </div>
-                <p className=" text-red-500"> {errors.name?.message} </p>
-              </div>
-
-              <div>
-                <div className="input-group">
-                  <Input
-                    type={`${show.cpassword ? "text" : "password"}`}
-                    {...register("cpassword")}
-                    placeholder="Confirm Password"
-                    className="input-text"
-                  />
-                  <span
-                    className="icon flex items-center px-4"
-                    onClick={() =>
-                      setShow({ ...show, password: !show.cpassword })
-                    }
-                  >
-                    <HiFingerPrint size={25} />
-                  </span>
-                </div>
-                <p className=" text-red-500"> {errors.name?.message} </p>
+                <p className=" text-red-500"> {errors.password?.message} </p>
               </div>
 
               {/* login */}
@@ -142,17 +98,17 @@ const Register = () => {
                   className="button cursor-pointer max-w-[280px]"
                 >
                   {!isSubmitting ? (
-                    <span>Submit</span>
+                    <span>Signin</span>
                   ) : (
                     <span className=" flex items-center gap-1">
-                      <span>Submitting...</span>
+                      <span>Signing...</span>
                       <FiLoader className=" animate-spin" />
                     </span>
                   )}
                 </button>
               </div>
+              {/* for google */}
             </form>
-            {/* for google */}
             <div className="input-button flex justify-center">
               <button
                 type="button"
@@ -172,9 +128,9 @@ const Register = () => {
             </div>
             {/* bottom */}
             <button className="text-center text-gray-400">
-              Have an Account?
-              <Link href={"/auth/signin"}>
-                <span className="text-blue-700">Sign in</span>
+              Don't have an Account?
+              <Link href={"/auth/register"}>
+                <span className="text-blue-700">Register</span>
               </Link>
             </button>
           </div>
@@ -184,4 +140,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signin;
