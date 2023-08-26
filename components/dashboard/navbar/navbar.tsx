@@ -7,7 +7,6 @@ import { BsFillBellFill, BsMoonFill, BsSunFill } from "react-icons/bs";
 
 const Navbar = () => {
   const currentUser = useSession();
-  console.log(currentUser);
 
   const { setTheme, theme } = useTheme();
 

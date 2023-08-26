@@ -68,8 +68,7 @@ export const SigninSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required" })
-    .email("this is not a valid email")
-    .refine((e) => e === "abcd@fg.com", "This email is not in our database"),
+    .email("this is not a valid email"),
   password: z.string().nonempty("Required Field"),
 });
 export type SigninType = z.infer<typeof SigninSchema>;

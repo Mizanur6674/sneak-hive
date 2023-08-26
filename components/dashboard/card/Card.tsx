@@ -5,7 +5,7 @@ import { DashCardDataType } from "@/components/shared/types";
 import { useQueries } from "@tanstack/react-query";
 import { GiFruitBowl } from "react-icons/gi";
 import { PiShoppingCartSimpleFill, PiUsersThree } from "react-icons/pi";
-import { TbCurrencyDollar } from "react-icons/tb";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 const Card = () => {
   const result = useQueries({
@@ -56,7 +56,7 @@ const Card = () => {
       id: 3,
       label: "Sales",
       value: totalPrice | 0,
-      icon: TbCurrencyDollar,
+      icon: TbCurrencyTaka,
     },
     {
       id: 4,

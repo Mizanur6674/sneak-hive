@@ -24,32 +24,44 @@ const Billing = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
-    formState: { errors, isValid, isSubmitting },
+    formState: { isValid, isSubmitting },
   } = useForm<BillingDataType>({
     resolver: zodResolver(BillingSchema),
   });
 
-  const onSubmit = async (contact_info: BillingDataType) => {
-    try {
-      if (!cart.length) {
-        return;
-      }
+  // const onSubmit = async (contact_info: BillingDataType) => {
+  //   console.log({ contact_info });
 
-      const session = JSON.parse(await checkoutSession(cart));
-      await postOrder(contact_info, cart, session.id);
-      stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-    } catch (error) {
-      toast.error("Not Create an Order!");
-    }
-  };
+  //   try {
+  //     if (!cart.length) {
+  //       return;
+  //     }
+
+  //     const session = JSON.parse(await checkoutSession(cart));
+  //     const orderData = {
+  //       contact_info,
+  //       items: {
+  //         products: cart,
+  //       },
+  //       payment_id: session.id,
+  //       userId: data?.user?.id,
+  //     };
+  //     console.log({ orderData });
+
+  //     return;
+  //     await postOrder(orderData);
+  //     stripe.redirectToCheckout({
+  //       sessionId: session.id,
+  //     });
+  //   } catch (error) {
+  //     toast.error("Not Create an Order!");
+  //   }
+  // };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      // onSubmit={handleSubmit(onSubmit)}
       className="bg-[#FAFAFA] py-10 lg:py-16 px-1 sm:px-6 md:px-16"
     >
       <h5 className=" text-3xl border-b border-theme-light-gray">
@@ -87,7 +99,7 @@ const Billing = () => {
         />
       </div>
 
-      <Button disabled={isSubmitting} type="submit" className=" btn-primary">
+      <Button disabled={!isSubmitting} type="submit" className=" btn-primary">
         Place to Order{" "}
         {isSubmitting && <Loader className="ml-2 animate-spin" />}
       </Button>
