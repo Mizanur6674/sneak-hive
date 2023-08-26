@@ -5,6 +5,7 @@ import setCart from "./setCart";
 type Props = Omit<ProductType, "categoryId"> & {
   selectedSize: string;
   totalPrice: number;
+  quantity: number;
 };
 const addToCart = (product: Props) => {
   const availableProducts = getCart();
