@@ -6,9 +6,9 @@ const ProductCard = ({ data }: { data: any }) => {
   return (
     <Link
       href={`/product/${data?.slug}`}
-      className="transform w-full bg-white duration-200 hover:scale-105 cursor-pointer"
+      className=" rounded-md shadow-md transform w-full bg-white duration-200 hover:scale-105 cursor-pointer"
     >
-      <div className="w-full aspect-square relative overflow-hidden">
+      <div className=" w-full aspect-square relative overflow-hidden">
         <Image
           fill
           src={data.images[0]}

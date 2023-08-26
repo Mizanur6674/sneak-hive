@@ -13,6 +13,7 @@ import { useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import ReactMarkdown from "react-markdown";
 import { ToastContainer, toast } from "react-toastify";
+import Wrapper from "@/components/wapper";
 import "react-toastify/dist/ReactToastify.css";
 const ProductFilterData = ({ result }) => {
   const [selectedSize, setSelectedSize] = useState();
@@ -20,8 +21,7 @@ const ProductFilterData = ({ result }) => {
   const dispatch = useAppDispatch();
   const { wishList } = useAppSelector((state) => state.addWishList);
   const { push } = useRouter();
-  // const sizes = result?.size?.data.filter((size) => size.enabled);
-  // const p = product?.result?.[0]?.attributes;
+
   const notify = () => {
     toast.success("Success. Check your cart!", {
       position: "bottom-right",
@@ -55,12 +55,12 @@ const ProductFilterData = ({ result }) => {
     0
   );
   return (
-    <div className="w-full md:py-20">
+    <Wrapper className="w-full md:py-20">
       <ToastContainer />
 
-      <div className=" container flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
+      <div className=" flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
         {/* left */}
-        <div className="w-full md:w-auto flex-[1.5] max-w-[500] lg:max-w-full mx-auto lg:mx-0">
+        <div className=" rounded-md shadow-md overflow-hidden w-full md:w-auto flex-[1.5] max-w-[500] lg:max-w-full mx-auto lg:mx-0">
           <ProductDetailsCarousel images={result?.images[0]} />
         </div>
         {/* right */}
@@ -69,9 +69,6 @@ const ProductFilterData = ({ result }) => {
           <div className="text-[34px] font-semibold mb-2 leading-tight">
             {result?.name}
           </div>
-          {/* Product subtitle */}
-          {/* <div className="mb-5 text-lg font-semibold ">{result?.subtitle}</div> */}
-          {/* right */}
 
           {/* Product Price */}
           <div className="flex items-center">
@@ -142,15 +139,6 @@ const ProductFilterData = ({ result }) => {
                 );
               })}
             </div>
-            {/* <div className="grid grid-cols-3 gap-2">
-                {sizes.map((item, index) => (
-                  <div
-                    key={index}
-                    className="py-3 font-medium text-center border rounded-md cursor-pointer hover:border-black"
-                  >
-                    {item?.size}
-                  </div>
-                ))} */}
 
             {/* SHOW ERROR START */}
             {showError && (
@@ -187,6 +175,7 @@ const ProductFilterData = ({ result }) => {
             Add to Cart
           </button>
           {/* Add to card end*/}
+
           {/* Wishlist button start */}
           <button
             onClick={() => {
@@ -222,7 +211,7 @@ const ProductFilterData = ({ result }) => {
         {/* right column end */}
       </div>
       {result && result.length > 0 && <RelatedProducts product={product} />}
-    </div>
+    </Wrapper>
   );
 };
 

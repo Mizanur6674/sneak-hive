@@ -2,6 +2,7 @@
 import { order } from "@prisma/client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { TbCurrencyTaka } from "react-icons/tb";
+import ActiveCell from "./ActiveCell";
 
 const columnHelper = createColumnHelper<order>();
 export const columns: ColumnDef<order>[] = [
@@ -47,12 +48,12 @@ export const columns: ColumnDef<order>[] = [
     header: "Status",
   }),
 
-  //   {
-  //     id: "active",
-  //     header: "Active",
-  //     cell: (e) => {
-  //       const data = e.row.original;
-  //       return <ActiveCell data={data} />;
-  //     },
-  //   },
+  {
+    id: "active",
+    header: "Active",
+    cell: (e) => {
+      const data = e.row.original;
+      return <ActiveCell data={data} />;
+    },
+  },
 ];

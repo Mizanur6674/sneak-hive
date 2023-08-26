@@ -33,7 +33,7 @@ const SignInButton = () => {
           <DropdownMenuSeparator />
           {!pathname.startsWith("/dashboard") && data?.user && (
             <Link href="/my-orders">
-              <DropdownMenuItem className="text-gray-700 cursor-pointer">
+              <DropdownMenuItem className="text-gray-600 cursor-pointer">
                 My Orders
               </DropdownMenuItem>
             </Link>
@@ -41,7 +41,7 @@ const SignInButton = () => {
           {pathname.startsWith("/dashboard") &&
             data?.user?.role === "ADMIN" && (
               <Link href="/dashboard/create-admin">
-                <DropdownMenuItem className="cursor-pointer ">
+                <DropdownMenuItem className="text-gray-600 cursor-pointer ">
                   Add Admin
                 </DropdownMenuItem>
               </Link>
