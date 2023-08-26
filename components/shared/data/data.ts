@@ -471,6 +471,12 @@ export const dashboardSidebarData: DashboardSidebarDataType[] = [
     icon: SiReacthookform,
     href: "/dashboard/products",
   },
+  {
+    id: 2,
+    title: "Orders",
+    icon: SiReacthookform,
+    href: "/dashboard/orders",
+  },
 ];
 // dashboard card data
 

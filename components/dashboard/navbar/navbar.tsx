@@ -10,10 +10,12 @@ const Navbar = () => {
 
   const { setTheme, theme } = useTheme();
 
+  console.log({ currentUser });
+
   return (
-    <div className=" px-4 bg-theme-primary h-20 w-full flex items-center justify-between">
-      <div className=" flex items-center gap-x-2">
-        <div className=" relative w-6 h-6 ">
+    <div className="flex items-center justify-between w-full h-20 px-4  bg-theme-primary">
+      <div className="flex items-center  gap-x-2">
+        <div className="relative w-6 h-6 ">
           <Image src="/logo.svg" fill alt="mainLogo" />
         </div>
         <h5 className=" text-xl text-theme-light-green font-bold leading-[45px] ">
@@ -21,18 +23,18 @@ const Navbar = () => {
         </h5>
       </div>
 
-      <div className=" flex gap-x-4 items-center">
+      <div className="flex items-center  gap-x-4">
         {theme === "dark" ? (
           <BsSunFill
             onClick={() => setTheme("light")}
             size={32}
-            className=" text-white cursor-pointer"
+            className="text-white cursor-pointer "
           />
         ) : (
           <BsMoonFill
             onClick={() => setTheme("dark")}
             size={32}
-            className=" text-white cursor-pointer"
+            className="text-white cursor-pointer "
           />
         )}
         <SignInButton />

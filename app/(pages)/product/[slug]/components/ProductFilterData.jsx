@@ -8,6 +8,7 @@ import { getDiscountedPricePercentage } from "@/utils/helper";
 import addToCart from "@/utils/localStorage/addCart";
 import { allSizes } from "@/utils/sizes";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import ReactMarkdown from "react-markdown";
@@ -18,7 +19,7 @@ const ProductFilterData = ({ result }) => {
   const [showError, setShowError] = useState(false);
   const dispatch = useAppDispatch();
   const { wishList } = useAppSelector((state) => state.addWishList);
-
+  const { push } = useRouter();
   // const sizes = result?.size?.data.filter((size) => size.enabled);
   // const p = product?.result?.[0]?.attributes;
   const notify = () => {
@@ -54,7 +55,7 @@ const ProductFilterData = ({ result }) => {
     0
   );
   return (
-    <div className=" w-full md:py-20">
+    <div className="w-full md:py-20">
       <ToastContainer />
 
       <div className=" container flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
@@ -69,7 +70,7 @@ const ProductFilterData = ({ result }) => {
             {result?.name}
           </div>
           {/* Product subtitle */}
-          {/* <div className="text-lg font-semibold mb-5 ">{result?.subtitle}</div> */}
+          {/* <div className="mb-5 text-lg font-semibold ">{result?.subtitle}</div> */}
           {/* right */}
 
           {/* Product Price */}
@@ -111,7 +112,7 @@ const ProductFilterData = ({ result }) => {
           <div className="mb-10">
             {/* Heading Start */}
             <div className="flex justify-between mb-2">
-              <div className="text-md font-semibold">Select Size</div>
+              <div className="font-semibold text-md">Select Size</div>
               <div className="text-md font-medium text-black/[0.5] cursor-pointer">
                 Select Guide
               </div>
@@ -145,7 +146,7 @@ const ProductFilterData = ({ result }) => {
                 {sizes.map((item, index) => (
                   <div
                     key={index}
-                    className="border rounded-md text-center py-3 font-medium hover:border-black cursor-pointer"
+                    className="py-3 font-medium text-center border rounded-md cursor-pointer hover:border-black"
                   >
                     {item?.size}
                   </div>
@@ -153,19 +154,20 @@ const ProductFilterData = ({ result }) => {
 
             {/* SHOW ERROR START */}
             {showError && (
-              <div className="text-red-600 mt-1">
+              <div className="mt-1 text-red-600">
                 Size selection is required
               </div>
             )}
           </div>
           {/* Add to card */}
           <button
-            className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75"
+            className="w-full py-4 mb-3 text-lg font-medium text-white transition-transform bg-black rounded-full active:scale-95 hover:opacity-75"
             onClick={() => {
               if (!session?.data) {
-                signIn("google", {
-                  callbackUrl: `/product/${result.slug}`,
-                });
+                push("/auth/signin");
+                // signIn("google", {
+                //   callbackUrl: `/product/${result.slug}`,
+                // });
                 return;
               }
               if (!selectedSize) {
@@ -199,7 +201,7 @@ const ProductFilterData = ({ result }) => {
                 notify();
               }
             }}
-            className="w-full py-4 rounded-full border border-black text-lg font-medium transition-transform active:scale-95 flex items-center justify-center gap-2 hover:opacity-75 mb-10"
+            className="flex items-center justify-center w-full gap-2 py-4 mb-10 text-lg font-medium transition-transform border border-black rounded-full active:scale-95 hover:opacity-75"
           >
             Wishlist
             {wishList.find((item) => item.id === addProduct.id) ? (
@@ -211,8 +213,8 @@ const ProductFilterData = ({ result }) => {
           {/* Wishlist end */}
 
           <div>
-            <div className="text-lg font-bold mb-5">Product Details</div>
-            <div className="markdown text-md mb-5">
+            <div className="mb-5 text-lg font-bold">Product Details</div>
+            <div className="mb-5 markdown text-md">
               <ReactMarkdown>{result?.attributes?.Description}</ReactMarkdown>
             </div>
           </div>
