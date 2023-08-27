@@ -202,13 +202,7 @@ const ProductFilterData = ({ result }) => {
           <div>
             <div className="mb-5 text-lg font-bold">Product Details</div>
             <div className="mb-5 markdown text-md">
-              <ReactMarkdown>
-                "Every time the AJ1 gets a remake, you get the classic sneaker
-                in new colours and textures for an exciting, revamped look but
-                with all the familiar comforts you know. Premium materials and
-                accents give modern expression to an all-time favourite. Colour
-                Shown: White/Black/Ice Blue Style: DV1308-104"
-              </ReactMarkdown>
+              <ReactMarkdown>{result?.description}</ReactMarkdown>
             </div>
           </div>
         </div>
