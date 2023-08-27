@@ -45,8 +45,17 @@ export const productColumns: ColumnDef<product>[] = [
     },
   }),
 
-  columnHelper.accessor("description", {
-    header: "Description",
+  columnHelper.accessor("discount", {
+    header: "Discount",
+    cell: (info) => {
+      const discount = info.getValue();
+      return (
+        <span className="flex items-center justify-center">
+          <TbCurrencyTaka size={16} />
+          {discount}
+        </span>
+      );
+    },
   }),
   columnHelper.accessor("active", {
     header: "Active",

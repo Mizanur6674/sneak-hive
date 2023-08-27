@@ -38,8 +38,10 @@ const ReactBasicTable: React.FC<DataTableProps> = ({
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnFilters,
+    initialState: {
+      pagination: {
+        pageSize: 7,
+      },
     },
   });
 

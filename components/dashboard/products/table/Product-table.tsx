@@ -33,13 +33,17 @@ const ProductTable: React.FC<DataTableProps> = ({ columns, data }) => {
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: {
+
+    initialState: {
       columnFilters,
+      pagination: {
+        pageSize: 7,
+      },
     },
   });
 
   return (
-    <div className="w-full  space-y-4">
+    <div className="w-full space-y-4">
       <Table className=" border-2 border-theme-light-gray">
         <TableHeader className=" border-2 border-theme-light-gray">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -83,7 +87,9 @@ const ProductTable: React.FC<DataTableProps> = ({ columns, data }) => {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.nextPage()}
+          onClick={() => {
+            table.nextPage();
+          }}
           disabled={!table.getCanNextPage()}
         >
           Next

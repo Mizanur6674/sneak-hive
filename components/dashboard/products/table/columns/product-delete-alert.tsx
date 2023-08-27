@@ -17,11 +17,13 @@ import { product } from "@prisma/client";
 import { deleteProduct } from "@/action/products/deleteProduct";
 
 const ProductDeleteAlert: React.FC<{ data?: product }> = ({ data }) => {
+  console.log(fetches);
+
   const handleDeleteProduct = async () => {
     try {
       deleteProduct(data.id).then((res) => {
-        fetches.refetchOrders();
-
+        fetches?.refetchProducts && fetches?.refetchProducts();
+        fetches?.refetchOrders && fetches?.refetchOrders();
         toast.success("Deleted Data");
       });
     } catch (error) {
