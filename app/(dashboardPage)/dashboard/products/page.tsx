@@ -1,7 +1,7 @@
 "use client";
 import { getProducts } from "@/action/products/getProducts";
-import ProductTable from "@/components/dashboard/products/table/Product-table";
 import { productColumns } from "@/components/dashboard/products/table/columns/product-table-columns";
+import ReactBasicTable from "@/components/react-table/ReactTable";
 import { Button } from "@/components/ui/button";
 import { fetches } from "@/lib/refetch";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
@@ -38,7 +38,7 @@ export default function Products() {
         </Button>
       </div>
 
-      <ProductTable columns={productColumns} data={data} />
+      <ReactBasicTable columns={productColumns} data={data} />
     </div>
   );
 }
