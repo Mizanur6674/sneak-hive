@@ -1,6 +1,7 @@
 import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 const ProductDetailsModal: React.FC<{ data: any }> = ({ data }) => {
   const products = data.items.products;
@@ -35,17 +36,19 @@ const ProductDetailsModal: React.FC<{ data: any }> = ({ data }) => {
                       </span>
                       {product.quantity}
                     </h6>
-                    <h6 className=" text-xs">
+                    <h6 className=" flex items-center text-xs">
                       <span className=" text-sm font-semibold pr-2">
                         Price:
                       </span>
+                      <TbCurrencyTaka size={16} />
                       {product.price}
                     </h6>
-                    <h6 className=" text-xs">
+                    <h6 className=" flex items-center text-xs">
                       <span className=" text-sm font-semibold pr-2">
-                        Description:
+                        Dicount:
                       </span>
-                      {product.description}
+                      <TbCurrencyTaka size={16} />
+                      {product.discount}
                     </h6>
                   </div>
                 );
@@ -106,11 +109,13 @@ const ProductDetailsModal: React.FC<{ data: any }> = ({ data }) => {
                       </span>
                       <h6>{data.orderNumber}</h6>
                     </div>
-                    <div className=" text-xs flex items-center">
-                      <span className=" text-sm font-semibold w-20 ">
+                    <div className=" text-xs flex items-center ">
+                      <span className=" text-sm font-semibold w-[86px] ">
                         UpdatedAt:
                       </span>
-                      <h6 className=" flex ">{data.updatedAt[0]}</h6>
+                      <h6 className=" flex ">
+                        {new Date(data.updatedAt).toLocaleString()}
+                      </h6>
                     </div>
                     <div className=" text-xs flex items-center">
                       <span className=" text-sm font-semibold w-20 ">

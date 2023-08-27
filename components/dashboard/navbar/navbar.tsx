@@ -8,7 +8,7 @@ const Navbar = () => {
   const { setTheme, theme } = useTheme();
 
   return (
-    <div className="flex items-center justify-between w-full h-20 px-4  bg-theme-primary">
+    <div className="flex items-center justify-between w-full h-20 px-4  bg-[#87c498]">
       <div className="flex items-center  gap-x-2">
         <div className="relative w-6 h-6 ">
           <Image src="/logo.svg" fill alt="mainLogo" />
