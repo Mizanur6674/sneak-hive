@@ -25,8 +25,6 @@ interface DataTableProps<TData = any, TValue = any> {
   data: TData[];
 }
 const ProductTable: React.FC<DataTableProps> = ({ columns, data }) => {
-  console.log(data);
-
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,

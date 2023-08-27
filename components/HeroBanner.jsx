@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 
 const HeroBanner = () => {
   const session = useSession();
-  console.log(session);
+
   return (
     <div className="relative text-white text-[20px] w-screen h-[calc(100vh-80px)] overflow-hidden">
       <Carousel

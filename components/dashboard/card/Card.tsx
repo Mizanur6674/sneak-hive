@@ -3,7 +3,7 @@ import { getOrders } from "@/action/order/getOrders";
 import { getProducts } from "@/action/products/getProducts";
 import { DashCardDataType } from "@/components/shared/types";
 import { useQueries } from "@tanstack/react-query";
-import { GiFruitBowl } from "react-icons/gi";
+import { GiConverseShoe } from "react-icons/gi";
 import { PiShoppingCartSimpleFill, PiUsersThree } from "react-icons/pi";
 import { TbCurrencyTaka } from "react-icons/tb";
 
@@ -53,7 +53,7 @@ const Card = () => {
       id: 2,
       label: " products",
       value: products?.length | 0,
-      icon: GiFruitBowl,
+      icon: GiConverseShoe,
     },
     {
       id: 3,
@@ -90,9 +90,7 @@ const Card = () => {
                     <item.icon className=" text-white" size={24} />
                   </div>
                   <div>
-                    <p className=" text-base text-theme-light-gray">
-                      {item.label}
-                    </p>
+                    <p className=" text-base text-gray-700">{item.label}</p>
                     <span className=" text-base text-white font-bold">
                       {item.value}
                     </span>

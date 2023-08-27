@@ -10,7 +10,6 @@ function CategoryFilterData({ result }: any) {
   const query = useSearchParams();
   const maxResult = 3;
   const { slug } = useParams();
-  console.log(result);
 
   return (
     <div className="w-full md:py-20 relative">

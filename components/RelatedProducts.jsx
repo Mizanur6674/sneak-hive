@@ -1,37 +1,29 @@
+"use client";
 import React from "react";
-
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ProductCard from "./ProductCard";
+import { useQuery } from "@tanstack/react-query";
+import { getProductsByCategoryId } from "@/action/products/getProducts";
 
-const RelatedProducts = ({ products }) => {
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1023, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 767, min: 0 },
-      items: 1,
-    },
-  };
+const RelatedProducts = ({ categoryId, slug }) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["get-products"],
+    queryFn: async () => JSON.parse(await getProductsByCategoryId(categoryId)),
+  });
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="mt-[50px] md:mt-[100px] mb-[100px] md:mb-0">
+    <div className="mt-[50px] md:mt-[100px] pb-[100px]">
       <div className="text-2xl font-bold mb-5">You Might Also Like</div>
-      <Carousel
-        responsive={responsive}
-        containerclassName="-mx-[10px]"
-        itemclassName="px-[10px]"
-      >
-        {products?.data?.map((product) => (
-          <ProductCard key={product?.id} data={product} />
-        ))}
-      </Carousel>
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {data
+          ?.filter((item) => item.slug !== slug)
+          ?.map((product) => (
+            <ProductCard key={product?.id} data={product} />
+          ))}
+      </div>
     </div>
   );
 };

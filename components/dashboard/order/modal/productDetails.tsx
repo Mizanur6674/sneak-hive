@@ -3,7 +3,6 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 const ProductDetailsModal: React.FC<{ data: any }> = ({ data }) => {
-  console.log({ data });
   const products = data.items.products;
   const contacts = data.contact_info;
 

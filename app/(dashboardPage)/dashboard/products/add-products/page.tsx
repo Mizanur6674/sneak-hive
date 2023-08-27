@@ -1,5 +1,4 @@
 "use client";
-// import { createPrice } from "@/actions/stripe/stripe";
 import { getCategory } from "@/action/categories/getCategoryId";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,7 +29,6 @@ import SelectedMultipleSize from "@/components/dashboard/products/SelectedMultip
 import { fetches } from "@/lib/refetch";
 
 export default function AddProducts() {
-  const selectedValues = new Map<string, number>();
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const router = useRouter();
@@ -181,14 +179,12 @@ export default function AddProducts() {
               if (e.target.files.length !== 0) {
                 const file: File = e.target.files[0];
                 setPreview(URL.createObjectURL(file));
-                console.log({ file });
 
                 const { url } = await uploadImages(
                   file,
                   setUploadProgress,
                   "organic"
                 );
-                console.log("url", url);
 
                 setValue("images", [url], {
                   shouldTouch: true,

@@ -29,8 +29,6 @@ function DashboardHome() {
       return <ActiveCell data={data} />;
     },
   };
-  console.log(data);
-
   return (
     <div className="w-full ">
       <Card />

@@ -20,8 +20,6 @@ export const uploadImages = async (
       }),
     });
 
-    console.log({ res });
-
     const { url } = await res.json();
     const options = {
       headers: {

@@ -35,8 +35,6 @@ const ProductFilterData = ({ result }) => {
     });
   };
 
-  // const { cartItems } = useSelector((state) => state.cart);
-  // console.log({ cartItems });
   const session = useSession();
   const addProduct = {
     id: result?.id,
@@ -60,7 +58,7 @@ const ProductFilterData = ({ result }) => {
 
       <div className=" flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
         {/* left */}
-        <div className=" rounded-md shadow-md overflow-hidden w-full md:w-auto flex-[1.5] max-w-[500] lg:max-w-full mx-auto lg:mx-0">
+        <div className=" rounded-md shadow-md overflow-hidden w-full md:w-auto flex-[1.5] max-w-[500] lg:max-w-full mx-auto lg:mx-0 h-[680px]">
           <ProductDetailsCarousel images={result?.images[0]} />
         </div>
         {/* right */}
@@ -204,13 +202,18 @@ const ProductFilterData = ({ result }) => {
           <div>
             <div className="mb-5 text-lg font-bold">Product Details</div>
             <div className="mb-5 markdown text-md">
-              <ReactMarkdown>{result?.attributes?.Description}</ReactMarkdown>
+              <ReactMarkdown>
+                "Every time the AJ1 gets a remake, you get the classic sneaker
+                in new colours and textures for an exciting, revamped look but
+                with all the familiar comforts you know. Premium materials and
+                accents give modern expression to an all-time favourite. Colour
+                Shown: White/Black/Ice Blue Style: DV1308-104"
+              </ReactMarkdown>
             </div>
           </div>
         </div>
         {/* right column end */}
       </div>
-      {result && result.length > 0 && <RelatedProducts product={product} />}
     </Wrapper>
   );
 };

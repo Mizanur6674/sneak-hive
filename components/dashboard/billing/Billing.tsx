@@ -19,7 +19,6 @@ const Billing = () => {
   const { data: authSession }: any = useSession();
   const stripe = useStripe();
   const cart = getCart();
-  console.log({ cart });
 
   const {
     register,
@@ -31,7 +30,6 @@ const Billing = () => {
   });
 
   const onSubmit = async (contact_info: BillingType) => {
-    console.log({ contact_info });
     try {
       if (!cart.length) {
         return;

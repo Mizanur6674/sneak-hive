@@ -14,11 +14,8 @@ const Sidebar = () => {
             className=" flex items-center gap-x-3"
             onClick={() => router.push(item.href)}
           >
-            <item.icon
-              size={20}
-              className=" text-theme-light-gray hover:text-white"
-            />
-            <h5 className=" text-theme-light-gray hover:text-white hover:transition-all text-xl">
+            <item.icon size={20} className=" text-gray-900 hover:text-white" />
+            <h5 className=" text-gray-700 hover:text-white hover:transition-all text-xl">
               {item.title}
             </h5>
           </div>
