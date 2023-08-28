@@ -20,12 +20,9 @@ const ProductFilterData = ({ result }) => {
   const dispatch = useAppDispatch();
   const { wishList } = useAppSelector((state) => state.addWishList);
   const { push } = useRouter();
-  const sizeOfQuantity = result.sizes.find(
+  const sizeOfQuantity = result?.sizes?.find(
     (s) => s.size === selectedSize
   )?.quantity;
-
-  console.log({ result });
-
   const notify = () => {
     toast.success("Success. Check your cart!", {
       position: "bottom-right",
@@ -52,11 +49,12 @@ const ProductFilterData = ({ result }) => {
     totalPrice: result?.price * 1,
     discount: result?.discount,
   };
+
   const totalQuantity = result?.sizes?.reduce(
     (acc, { quantity }) => acc + quantity,
     0
   );
-  console.log({ totalQuantity });
+
   return (
     <Wrapper className="w-full md:py-20">
       <ToastContainer />
@@ -84,7 +82,11 @@ const ProductFilterData = ({ result }) => {
               </p>
             )}
             <div className=" pl-2 text-md font-medium text-black/[0.5]">
-              {totalQuantity >= 1 ? ` Q:${totalQuantity} ` : `Out of stock`}
+              {totalQuantity >= 1 ? (
+                ` Q:${totalQuantity} `
+              ) : (
+                <span className=" text-red-500">Out of stock</span>
+              )}
             </div>
             {result?.discount && (
               <p className="ml-auto text-base font-medium text-red-500">
@@ -115,8 +117,10 @@ const ProductFilterData = ({ result }) => {
               ) : (
                 <span className=" text-red-500">Out of stock</span>
               )
+            ) : totalQuantity !== 0 ? (
+              <span>{totalQuantity}</span>
             ) : (
-              totalQuantity
+              <span className=" text-red-500">Out of stock</span>
             )}
           </div>
 
@@ -135,11 +139,12 @@ const ProductFilterData = ({ result }) => {
             <div id="sizesGrid" className="grid grid-cols-3 gap-2">
               {allSizes?.map((size, i) => {
                 const isHaveSize = result?.sizes?.find((s) => s.size === size);
+
                 return (
                   <button
                     key={i}
                     className={`border rounded-md text-center py-3 font-medium ${
-                      isHaveSize
+                      isHaveSize && isHaveSize?.quantity > 0
                         ? "hover:border-black cursor-pointer"
                         : "cursor-not-allowed bg-black/[0.1] opacity-50"
                     } ${selectedSize === size ? "border-black" : ""}`}
@@ -147,7 +152,7 @@ const ProductFilterData = ({ result }) => {
                       setSelectedSize(size);
                       setShowError(false);
                     }}
-                    disabled={!isHaveSize}
+                    disabled={!isHaveSize && isHaveSize?.quantity > 0}
                   >
                     {size}
                   </button>
