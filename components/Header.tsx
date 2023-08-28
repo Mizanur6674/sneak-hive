@@ -22,8 +22,6 @@ const Header = () => {
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [categories, setCategories] = useState(null);
-  const session = useSession();
 
   const [cart, setCart] = React.useState(0);
   useEffect(() => {
@@ -47,33 +45,28 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", controlNavbar);
     return () => {
-      window.addEventListener("scroll", controlNavbar);
+      window.removeEventListener("scroll", controlNavbar);
     };
   }, [lastScrollY]);
 
   return (
     <header
-      className={`px-10 w-full h-[50px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 ${show}`}
+      className={`px-10 w-full h-[50px] md:h-[80px] bg-white border-b shadow-sm  border-theme-light-gray flex items-center justify-between z-50 sticky top-0 transition-transform duration-300 ${show}`}
     >
       <div className=" w-full h-[60px] flex justify-between items-center">
         <Link href="/">
           <img src="/logo.svg" className="w-[40px] md:w-[60px]" alt="" />
         </Link>
-        <Menu
-          showCatMenu={showCatMenu}
-          setShowCatMenu={setShowCatMenu}
-          categories={categories}
-        />
+        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} />
         {mobileMenu && (
           <MenuMobile
             showCatMenu={showCatMenu}
             setShowCatMenu={setShowCatMenu}
             setMobileMenu={setMobileMenu}
-            categories={categories}
           />
         )}
 
-        <div className="flex items-center gap-2 text-black">
+        <div className=" flex items-center gap-2 text-black">
           {/* Icon Start */}
           <Link href="/wishlist">
             <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
