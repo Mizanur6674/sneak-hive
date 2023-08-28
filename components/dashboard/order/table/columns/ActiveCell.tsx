@@ -47,7 +47,7 @@ const ActiveCell: React.FC<{ data: order }> = ({ data }) => {
                 Active Status
               </DropdownMenu.SubTrigger>
               <DropdownMenu.Portal>
-                <DropdownMenu.SubContent className=" bg-white w-44 rounded shadow-xl p-4">
+                <DropdownMenu.SubContent className="dark:text-gray-700 bg-white w-44 rounded shadow-xl p-4">
                   <DropdownMenu.RadioGroup
                     className=" cursor-pointer space-y-3"
                     value={activeStatus}

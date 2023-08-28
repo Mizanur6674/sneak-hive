@@ -1,13 +1,12 @@
 "use client";
 import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
-import RelatedProducts from "@/components/RelatedProducts";
 import { setProduct } from "@/store/addCartSlice";
 import { setWishList } from "@/store/addWishListSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getDiscountedPricePercentage } from "@/utils/helper";
 import addToCart from "@/utils/localStorage/addCart";
 import { allSizes } from "@/utils/sizes";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
@@ -21,7 +20,9 @@ const ProductFilterData = ({ result }) => {
   const dispatch = useAppDispatch();
   const { wishList } = useAppSelector((state) => state.addWishList);
   const { push } = useRouter();
-
+  const sizeOfQuantity = result?.sizes?.find(
+    (s) => s.size === selectedSize
+  )?.quantity;
   const notify = () => {
     toast.success("Success. Check your cart!", {
       position: "bottom-right",
@@ -48,10 +49,12 @@ const ProductFilterData = ({ result }) => {
     totalPrice: result?.price * 1,
     discount: result?.discount,
   };
+
   const totalQuantity = result?.sizes?.reduce(
     (acc, { quantity }) => acc + quantity,
     0
   );
+
   return (
     <Wrapper className="w-full md:py-20">
       <ToastContainer />
@@ -79,7 +82,11 @@ const ProductFilterData = ({ result }) => {
               </p>
             )}
             <div className=" pl-2 text-md font-medium text-black/[0.5]">
-              Q:{totalQuantity}
+              {totalQuantity >= 1 ? (
+                ` Q:${totalQuantity} `
+              ) : (
+                <span className=" text-red-500">Out of stock</span>
+              )}
             </div>
             {result?.discount && (
               <p className="ml-auto text-base font-medium text-red-500">
@@ -96,11 +103,25 @@ const ProductFilterData = ({ result }) => {
             {`(Also includes all applicable duties)`}
           </div>
 
-          <div className="text-md font-medium text-black/[0.5]">
-            Quantity:
-            {selectedSize
-              ? result.sizes.find((s) => s.size === selectedSize).quantity
-              : totalQuantity}
+          <div className="text-md font-medium flex items-center gap-1">
+            <span className="font-semibold text-black/[.5]">Quantity:</span>
+            {sizeOfQuantity ? (
+              sizeOfQuantity > 0 ? (
+                <p className=" text-black/[0.5] ">
+                  only
+                  <span className=" mx-2 bg-green-500 px-1 rounded-sm text-center text-white">
+                    {sizeOfQuantity}
+                  </span>
+                  left in stock
+                </p>
+              ) : (
+                <span className=" text-red-500">Out of stock</span>
+              )
+            ) : totalQuantity !== 0 ? (
+              <span>{totalQuantity}</span>
+            ) : (
+              <span className=" text-red-500">Out of stock</span>
+            )}
           </div>
 
           {/* Product size range start */}
@@ -118,11 +139,12 @@ const ProductFilterData = ({ result }) => {
             <div id="sizesGrid" className="grid grid-cols-3 gap-2">
               {allSizes?.map((size, i) => {
                 const isHaveSize = result?.sizes?.find((s) => s.size === size);
+
                 return (
                   <button
                     key={i}
                     className={`border rounded-md text-center py-3 font-medium ${
-                      isHaveSize
+                      isHaveSize && isHaveSize?.quantity > 0
                         ? "hover:border-black cursor-pointer"
                         : "cursor-not-allowed bg-black/[0.1] opacity-50"
                     } ${selectedSize === size ? "border-black" : ""}`}
@@ -130,7 +152,7 @@ const ProductFilterData = ({ result }) => {
                       setSelectedSize(size);
                       setShowError(false);
                     }}
-                    disabled={!isHaveSize}
+                    disabled={!isHaveSize && isHaveSize?.quantity > 0}
                   >
                     {size}
                   </button>

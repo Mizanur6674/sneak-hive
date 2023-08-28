@@ -25,11 +25,7 @@ interface DataTableProps<TData = any, TValue = any> {
   data: TData[];
   name?: string;
 }
-const ReactBasicTable: React.FC<DataTableProps> = ({
-  columns,
-  data,
-  name = "Order Table",
-}) => {
+const ReactBasicTable: React.FC<DataTableProps> = ({ columns, data }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,

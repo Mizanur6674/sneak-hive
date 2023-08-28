@@ -1,15 +1,13 @@
 "use client";
 
-import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
 import { columns } from "@/components/dashboard/order/table/columns/Columns";
 import Wrapper from "@/components/wapper";
 import { fetches } from "@/lib/refetch";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { getMyOrders } from "./getMyOrders";
-import ActiveCell from "@/components/dashboard/order/table/columns/ActiveCell";
-import { useEffect } from "react";
 import ProductDetailsModal from "@/components/dashboard/order/modal/productDetails";
+import ReactBasicTable from "@/components/react-table/ReactTable";
 
 function DashboardHome() {
   const { data }: any = useSession();

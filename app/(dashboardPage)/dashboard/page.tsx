@@ -1,9 +1,9 @@
 "use client";
 import { getOrders } from "@/action/order/getOrders";
 import Card from "@/components/dashboard/card/Card";
-import ReactBasicTable from "@/components/dashboard/order/table/ReactTable";
 import ActiveCell from "@/components/dashboard/order/table/columns/ActiveCell";
 import { columns } from "@/components/dashboard/order/table/columns/Columns";
+import ReactBasicTable from "@/components/react-table/ReactTable";
 import { fetches } from "@/lib/refetch";
 import { useQuery } from "@tanstack/react-query";
 function DashboardHome() {
