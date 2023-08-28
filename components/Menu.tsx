@@ -13,7 +13,7 @@ const menuData = [
   // { id: 4, name: "Contact", url: "/contact" },
 ];
 
-const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
+const Menu = ({ showCatMenu, setShowCatMenu }: any) => {
   const { data, isLoading } = useQuery({
     queryKey: ["get-category"],
     queryFn: getCategory,

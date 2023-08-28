@@ -12,12 +12,7 @@ const menuData = [
   { id: 4, name: "Contact", url: "/contact" },
 ];
 
-const MenuMobile = ({
-  showCatMenu,
-  setShowCatMenu,
-  setMobileMenu,
-  categories,
-}) => {
+const MenuMobile = ({ showCatMenu, setShowCatMenu, setMobileMenu }) => {
   const { data, isLoading } = useQuery({
     queryKey: ["get-category"],
     queryFn: getCategory,
