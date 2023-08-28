@@ -3,6 +3,7 @@ import * as z from "zod";
 
 export const ProductSchema = z.object({
   name: z.string().nonempty("Required Field"),
+
   sizes: z.array(
     z.object({
       size: z.string().nonempty("Required Field"),

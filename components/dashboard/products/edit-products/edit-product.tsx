@@ -49,6 +49,8 @@ const EditProducts: React.FC<{ product: ProductType }> = ({ product }) => {
   });
 
   const onSubmit = async (data: ProductType) => {
+    console.log({ data });
+
     let priceId = product.priceId;
     try {
       if (data.price !== product.price) {
