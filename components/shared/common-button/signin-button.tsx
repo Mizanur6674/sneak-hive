@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,12 +22,14 @@ const SignInButton = () => {
     <Wrapper>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <div className="  h-6 w-6 p-4 text-theme-secondary border border-theme-light-gray rounded-full bg-white flex items-center justify-center shadow-md">
+          <div>
             {data?.user ? (
-              data?.user?.name.charAt(0).toUpperCase()
+              <Avatar>
+                <AvatarImage src="/user.png" alt="avatar" />
+              </Avatar>
             ) : (
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="avatar" />
+                <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             )}
           </div>
