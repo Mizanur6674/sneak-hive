@@ -13,10 +13,13 @@ export const updatedManyProduct = async (values: any[]) => {
           },
           data: {
             sizes: item.sizes.map((size) => {
-              return {
-                size: size?.size,
-                quantity: size?.quantity - item?.quantity,
-              };
+              if (size.size === item.selectedSize) {
+                return {
+                  ...size,
+                  quantity: size.quantity - item.quantity,
+                };
+              }
+              return size;
             }),
           },
         });

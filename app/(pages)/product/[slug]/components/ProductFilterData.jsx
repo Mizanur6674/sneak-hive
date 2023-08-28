@@ -1,13 +1,12 @@
 "use client";
 import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
-import RelatedProducts from "@/components/RelatedProducts";
 import { setProduct } from "@/store/addCartSlice";
 import { setWishList } from "@/store/addWishListSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getDiscountedPricePercentage } from "@/utils/helper";
 import addToCart from "@/utils/localStorage/addCart";
 import { allSizes } from "@/utils/sizes";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
@@ -21,6 +20,11 @@ const ProductFilterData = ({ result }) => {
   const dispatch = useAppDispatch();
   const { wishList } = useAppSelector((state) => state.addWishList);
   const { push } = useRouter();
+  const sizeOfQuantity = result.sizes.find(
+    (s) => s.size === selectedSize
+  )?.quantity;
+
+  console.log({ result });
 
   const notify = () => {
     toast.success("Success. Check your cart!", {
@@ -52,6 +56,7 @@ const ProductFilterData = ({ result }) => {
     (acc, { quantity }) => acc + quantity,
     0
   );
+  console.log({ totalQuantity });
   return (
     <Wrapper className="w-full md:py-20">
       <ToastContainer />
@@ -79,7 +84,7 @@ const ProductFilterData = ({ result }) => {
               </p>
             )}
             <div className=" pl-2 text-md font-medium text-black/[0.5]">
-              Q:{totalQuantity}
+              {totalQuantity >= 1 ? ` Q:${totalQuantity} ` : `Out of stock`}
             </div>
             {result?.discount && (
               <p className="ml-auto text-base font-medium text-red-500">
@@ -96,11 +101,23 @@ const ProductFilterData = ({ result }) => {
             {`(Also includes all applicable duties)`}
           </div>
 
-          <div className="text-md font-medium text-black/[0.5]">
-            Quantity:
-            {selectedSize
-              ? result.sizes.find((s) => s.size === selectedSize).quantity
-              : totalQuantity}
+          <div className="text-md font-medium flex items-center gap-1">
+            <span className="font-semibold text-black/[.5]">Quantity:</span>
+            {sizeOfQuantity ? (
+              sizeOfQuantity > 0 ? (
+                <p className=" text-black/[0.5] ">
+                  only
+                  <span className=" mx-2 bg-green-500 px-1 rounded-sm text-center text-white">
+                    {sizeOfQuantity}
+                  </span>
+                  left in stock
+                </p>
+              ) : (
+                <span className=" text-red-500">Out of stock</span>
+              )
+            ) : (
+              totalQuantity
+            )}
           </div>
 
           {/* Product size range start */}
