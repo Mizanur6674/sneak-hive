@@ -14,7 +14,7 @@ const Navbar = () => {
           <Image src="/logo.svg" fill alt="mainLogo" />
         </div>
         <h5 className=" text-xl text-theme-light-green font-bold leading-[45px] ">
-          Sneak
+          Sneaker Hive
         </h5>
       </div>
 
