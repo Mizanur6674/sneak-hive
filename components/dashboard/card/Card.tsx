@@ -1,7 +1,7 @@
 "use client";
 import { getOrders } from "@/action/order/getOrders";
 import { getProducts } from "@/action/products/getProducts";
-import { DashCardDataType } from "@/components/shared/types";
+import { DashCardDataType } from "@/types";
 import { useQueries } from "@tanstack/react-query";
 import { GiConverseShoe } from "react-icons/gi";
 import { PiShoppingCartSimpleFill, PiUsersThree } from "react-icons/pi";

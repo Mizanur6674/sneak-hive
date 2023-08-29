@@ -4,6 +4,7 @@ import { setProduct } from "@/store/addCartSlice";
 import { setWishList } from "@/store/addWishListSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getDiscountedPricePercentage } from "@/utils/helper";
+import { notify, wishify } from "@/utils/notify/notify";
 import addToCart from "@/utils/localStorage/addCart";
 import { allSizes } from "@/utils/sizes";
 import { useSession } from "next-auth/react";
@@ -11,9 +12,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import ReactMarkdown from "react-markdown";
-import { ToastContainer, toast } from "react-toastify";
-import Wrapper from "@/components/wapper";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Wrapper from "@/components/wapper";
+
 const ProductFilterData = ({ result }) => {
   const [selectedSize, setSelectedSize] = useState();
   const [showError, setShowError] = useState(false);
@@ -23,18 +25,6 @@ const ProductFilterData = ({ result }) => {
   const sizeOfQuantity = result?.sizes?.find(
     (s) => s.size === selectedSize
   )?.quantity;
-  const notify = () => {
-    toast.success("Success. Check your cart!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   const session = useSession();
   const addProduct = {
@@ -207,7 +197,7 @@ const ProductFilterData = ({ result }) => {
                 });
               } else {
                 dispatch(setWishList(addProduct));
-                notify();
+                wishify();
               }
             }}
             className="flex items-center justify-center w-full gap-2 py-4 mb-10 text-lg font-medium transition-transform border border-black rounded-full active:scale-95 hover:opacity-75"

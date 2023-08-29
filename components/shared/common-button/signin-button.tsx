@@ -22,14 +22,14 @@ const SignInButton = () => {
     <Wrapper>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <div>
+          <div className=" w-6 h-6 bg-theme-light-green rounded-full p-5 shadow-md flex items-center justify-center">
             {data?.user ? (
-              <Avatar>
-                <AvatarImage src="/user.png" alt="avatar" />
-              </Avatar>
+              <span className=" text-theme-primary">
+                {data?.user?.name?.charAt(0).toUpperCase()}
+              </span>
             ) : (
               <Avatar>
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src="/user.png" alt="avatar" />
               </Avatar>
             )}
           </div>

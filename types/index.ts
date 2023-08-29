@@ -75,6 +75,15 @@ export const SigninSchema = z.object({
   password: z.string().nonempty("Required Field"),
 });
 export type SigninType = z.infer<typeof SigninSchema>;
+
+export const ContactSchema = z.object({
+  name: z.string().nonempty("Required Field"),
+  email: z.string().email().nonempty("Required Field"),
+  subject: z.string().nonempty("Required Field"),
+  message: z.string().nonempty("Required Field"),
+});
+export type ContactType = z.infer<typeof ContactSchema>;
+
 export interface NavListDataType {
   id: number;
   title: string;
@@ -113,48 +122,14 @@ export interface NavListDataType {
   child: any[];
 }
 
-// export interface ProductCardDataType {
-//   id: number;
-//   btn: string;
-//   img: string;
-//   title: string;
-//   oldRate: string;
-//   newRate: string;
-// }
+export interface BillingDataType {
+  id: number;
+  title: string;
+  name: string;
+}
 
-// export type ProductPropsType = {
-//   id: number;
-//   name: string;
-//   slug: string;
-//   description: string;
-//   active: boolean;
-//   price: number;
-//   images: string[];
-//   createdAt: string;
-//   updatedAt: string;
-//   deletedAt: string;
-//   sectionId: number;
-//   categoryId: number;
-//   variants: string;
-//   like: number;
-//   sub_brandId: number;
-// };
-
-// export type CartItem = {
-//   id: number;
-//   quantity: number;
-//   price: number;
-// };
-
-// export interface Order {
-//   full_Name: string;
-//   phone: string;
-//   district: string;
-//   postal_code: number;
-//   orderNumber: string;
-//   price: string;
-//   amount: string;
-//   quantity: number;
-//   status: string;
-//   progress: string;
-// }
+export interface AboutAuthorTopDataType {
+  id: number;
+  icon: IconType;
+  link: string;
+}

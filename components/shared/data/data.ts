@@ -1,13 +1,13 @@
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { SiReacthookform } from "react-icons/si";
-import { PiShoppingCartSimpleFill, PiUsersThree } from "react-icons/pi";
-import { TbCurrencyTaka } from "react-icons/tb";
-import { DashCardDataType, DashboardSidebarDataType } from "../types";
 import { AiFillInstagram } from "react-icons/ai";
 import { BsPinterest, BsTwitter } from "react-icons/bs";
 import { TiSocialFacebook } from "react-icons/ti";
-import { AboutAuthorTopDataType, BillingDataType } from "@/types";
-import { GiConverseShoe } from "react-icons/gi";
+import {
+  AboutAuthorTopDataType,
+  BillingDataType,
+  DashboardSidebarDataType,
+} from "@/types";
 
 export const billingData: BillingDataType[] = [
   {
@@ -77,8 +77,8 @@ export const dashboardSidebarData: DashboardSidebarDataType[] = [
 // dashboard card data
 
 export const aboutAuthorTopData: AboutAuthorTopDataType[] = [
-  { id: 1, icon: BsTwitter, link: "www.twitter.com" },
-  { id: 2, icon: TiSocialFacebook, link: "www.facebook.com" },
-  { id: 3, icon: AiFillInstagram, link: "www.instagram.com" },
-  { id: 4, icon: BsPinterest, link: "www.pinterest.com" },
+  { id: 1, icon: BsTwitter, link: "https://www.twitter.com" },
+  { id: 2, icon: TiSocialFacebook, link: "https://www.facebook.com" },
+  { id: 3, icon: AiFillInstagram, link: "https://www.instagram.com" },
+  { id: 4, icon: BsPinterest, link: "https://www.pinterest.com" },
 ];
