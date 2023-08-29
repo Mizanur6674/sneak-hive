@@ -83,7 +83,7 @@ const Card = () => {
             return (
               <div
                 key={index}
-                className=" bg-[#87c498] h-24 w-full p-4 rounded-md shadow-md"
+                className=" bg-theme-primary h-24 w-full p-4 rounded-md shadow-md"
               >
                 <div className=" flex items-center gap-x-3">
                   <div className=" h-16 w-16 rounded-full bg-orange-500 flex items-center justify-center">

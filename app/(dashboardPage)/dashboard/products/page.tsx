@@ -26,7 +26,15 @@ export default function Products() {
     <div className="w-full space-y-4">
       <div className="flex items-center justify-between">
         <h5>Products Table</h5>
-
+        <Button
+          className="flex items-center gap-2 dark:bg-orange-500 dark:text-white dark:hover:bg-orange-600 "
+          onClick={() => router.push("/dashboard/category")}
+        >
+          <span>
+            <PlusCircledIcon />
+          </span>
+          Add Category
+        </Button>
         <Button
           className="flex items-center gap-2 dark:bg-orange-500 dark:text-white dark:hover:bg-orange-600 "
           onClick={() => router.push("/dashboard/products/add-products")}

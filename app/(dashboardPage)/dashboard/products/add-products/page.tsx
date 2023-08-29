@@ -22,7 +22,6 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiLoader } from "react-icons/fi";
-
 import addProduct from "@/action/products/addProduct";
 import { createPrice } from "@/action/stripe/stripe";
 import SelectedMultipleSize from "@/components/dashboard/products/SelectedMultipleSize";
