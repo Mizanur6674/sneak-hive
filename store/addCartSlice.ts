@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface InitialStateProps {
-  product: number[];
+  product: string[];
   isExist: boolean;
 }
 
@@ -14,7 +14,7 @@ const addProductCartSlice = createSlice({
   initialState,
   name: "addCart",
   reducers: {
-    setProduct: (state, actions: PayloadAction<number>) => {
+    setProduct: (state, actions: PayloadAction<string>) => {
       const isExit = state.product.find((item) => item === actions.payload);
       if (!isExit) {
         state.product.push(actions.payload);
@@ -22,7 +22,7 @@ const addProductCartSlice = createSlice({
         state.isExist = true;
       }
     },
-    removeProduct: (state, actions: PayloadAction<number>) => {
+    removeProduct: (state, actions: PayloadAction<string>) => {
       state.product = state.product.filter((item) => item !== actions.payload);
     },
   },

@@ -1,5 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,21 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const SignInButton = () => {
-  const { data }: any = useSession();
+  const { data, status }: any = useSession();
+  if (status === "loading") {
+    return (
+      <div className="z-[999] left-0 top-0  fixed w-screen h-screen bg-black/30  flex justify-between">
+        <div className="w-max mx-auto mt-5">
+          <button
+            disabled
+            className="disabled: bg-white text-black px-5 py-3 rounded-md font-medium"
+          >
+            Loading...
+          </button>
+        </div>
+      </div>
+    );
+  }
   const router = useRouter();
   const pathname = usePathname();
 

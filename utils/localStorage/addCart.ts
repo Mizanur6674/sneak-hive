@@ -11,7 +11,8 @@ const addToCart = (product: Props) => {
   const availableProducts = getCart();
 
   const productIndex = availableProducts.findIndex(
-    (item: any) => item.id === product.id
+    (item: any) =>
+      item.id === product.id && item.selectedSize === product.selectedSize
   );
   if (productIndex !== -1) {
     availableProducts[productIndex].quantity = product.quantity;

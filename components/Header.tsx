@@ -1,30 +1,20 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useAppSelector } from "@/store/store";
-import getCart from "@/utils/localStorage/getCart";
+import React, { useEffect, useState, memo } from "react";
+
 import { BiMenuAltRight } from "react-icons/bi";
-import { BsCart } from "react-icons/bs";
-import { IoMdHeartEmpty } from "react-icons/io";
+
 import { VscChromeClose } from "react-icons/vsc";
 import Menu from "./Menu";
 import MenuMobile from "./MobilMenu";
 import SignInButton from "./shared/common-button/signin-button";
+import HeaderIcon from "./HeaderIcon";
 
 const Header = () => {
-  const {
-    addProductCart: { product },
-    addWishList: { wishList },
-  } = useAppSelector((state) => state);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
-
-  const [cart, setCart] = React.useState(0);
-  useEffect(() => {
-    setCart(getCart().length);
-  }, [product.length]);
 
   const controlNavbar = () => {
     if (window.scrollY > 200) {
@@ -63,32 +53,8 @@ const Header = () => {
             setMobileMenu={setMobileMenu}
           />
         )}
-
         <div className=" flex items-center gap-2 text-black">
-          {/* Icon Start */}
-          <Link href="/wishlist">
-            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
-              <IoMdHeartEmpty className="text-[19px] md:text-[24px]" />
-              {wishList.length > 0 && (
-                <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                  {wishList.length}
-                </div>
-              )}
-            </div>
-          </Link>
-          {/* Icon End */}
-
-          {/* Icon Start */}
-          <Link href="/cart">
-            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
-              <BsCart className="text-[15px] md:text-[20px]" />
-              {cart > 0 && (
-                <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                  {cart}
-                </div>
-              )}
-            </div>
-          </Link>
+          <HeaderIcon />
 
           {/* Icon End */}
           {/* Mobile icon start */}
@@ -113,4 +79,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

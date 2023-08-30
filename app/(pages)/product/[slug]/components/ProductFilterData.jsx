@@ -176,7 +176,7 @@ const ProductFilterData = ({ result }) => {
                 });
               } else {
                 addToCart(addProduct);
-                dispatch(setProduct(result.id));
+                dispatch(setProduct(result.selectedSize));
 
                 notify();
               }

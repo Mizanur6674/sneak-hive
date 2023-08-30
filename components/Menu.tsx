@@ -14,7 +14,7 @@ const menuData = [
 ];
 
 const Menu = ({ showCatMenu, setShowCatMenu }: any) => {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["get-category"],
     queryFn: getCategory,
   });

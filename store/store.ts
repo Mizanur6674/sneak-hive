@@ -1,3 +1,4 @@
+"use client";
 import cartSlice from "./cartSlice";
 import addCartSlice from "./addCartSlice";
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";

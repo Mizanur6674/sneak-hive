@@ -104,8 +104,8 @@ const CartItem = ({ data, setQuantity }) => {
           </div>
           <RiDeleteBin6Line
             onClick={() => {
-              removeFromCart(data.id);
-              dispatch(removeProduct(data.id));
+              removeFromCart(data.id, data.selectedSize);
+              dispatch(removeProduct(data.selectedSize));
             }}
             className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]"
           />
