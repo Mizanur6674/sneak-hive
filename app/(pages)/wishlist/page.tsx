@@ -68,7 +68,7 @@ function WishListPage() {
                       <Button
                         onClick={() => {
                           addToCart(item);
-                          dispatch(setProduct(item.id));
+                          dispatch(setProduct(item.selectedSize));
                           dispatch(removeWishList(item.id));
                           if (wishList.length < 2) {
                             router.push("/cart");
@@ -113,7 +113,7 @@ function WishListPage() {
               onClick={() => {
                 wishList.forEach((item) => {
                   addToCart(item);
-                  dispatch(setProduct(item.id));
+                  dispatch(setProduct(item.selectedSize));
                 });
                 router.push("/cart");
                 setTimeout(() => {

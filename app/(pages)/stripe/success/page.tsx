@@ -13,7 +13,7 @@ function SuccessPage() {
   useEffect(() => {
     if ((id || id.startsWith("cs_")) && typeof window !== "undefined") {
       localStorage.clear();
-      dispatch(setProduct(1));
+      dispatch(setProduct("1"));
     } else {
       router.push("/");
     }
